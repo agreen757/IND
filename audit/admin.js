@@ -94,7 +94,7 @@ response.render('index', {'token':request._passport.session.user[0].token,'profi
 });
 
 app.get('/auth',
-    passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/yt-analytics.readonly', 'https://www.googleapis.com/auth/yt-analytics-monetary.readonly', 'https://www.googleapis.com/auth/youtube.readonly', 'https://www.googleapis.com/auth/youtubepartner', 'https://www.googleapis.com/auth/analytics', 'https://www.googleapis.com/auth/analytics.edit', 'https://www.googleapis.com/auth/analytics.readonly', 'https://www.googleapis.com/auth/plus.me', 'https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/userinfo.email'],
+    passport.authenticate('google', {scope: ['https://www.googleapis.com/auth/yt-analytics.readonly', 'https://www.googleapis.com/auth/yt-analytics-monetary.readonly', 'https://www.googleapis.com/auth/youtube.readonly', 'https://www.googleapis.com/auth/youtubepartner', 'https://www.googleapis.com/auth/analytics', 'https://www.googleapis.com/auth/analytics.edit', 'https://www.googleapis.com/auth/analytics.readonly', 'https://www.googleapis.com/auth/plus.me', 'https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/userinfo.email','https://www.googleapis.com/auth/drive','https://www.googleapis.com/auth/drive.file','https://www.googleapis.com/auth/drive.readonly','https://www.googleapis.com/auth/drive.metadata.readonly','https://www.googleapis.com/auth/drive.appdata','https://www.googleapis.com/auth/drive.apps.readonly'],
 				     accessType:'offline', approvalPrompt:'force'})
 );
 
@@ -115,7 +115,7 @@ app.get('/drive', function(req,res){
     //perform request in drive
     //push results to an array
     //emit the array to the html with slight delay in between
-    var url = "https://www.googleapis.com/drive/v2/files?access_token="+request._passport.session.user[0].token;
+    var url = "https://www.googleapis.com/drive/v2/files?access_token="+req._passport.session.user[0].token;
      console.log(url);
      demand.get(url, function(err,response,body){
          if(err){
