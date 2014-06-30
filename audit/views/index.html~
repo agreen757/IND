@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<link rel="stylesheet" type="text/css" href="/public/component.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.css">
+        <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.2/jquery.mobile-1.4.2.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+	  var woop = JSON.parse({{profile}})
+	  console.log(woop);
+            var counter = 0;
+            var socket = io.connect('http://ec2-54-84-17-96.compute-1.amazonaws.com/');
+            socket.on('progress', function(info){
+            //var data = JSON.parse(info);
+            console.log(info.info);
+            if(info.info === "finished"){
+            console.log("this should execute");
+            $(".download").show();
+        }
+        //Loop through the results of each 'data' that is recieved and append to the '#table' in the            results div
+        //using jQuery
+        counter++;
+        //console.log(counter);
+        var k = 0;
+        $(".results").show();
+        var id = info.info[0].element.id;
+        var isrc = info.info[0].element.isrc;
+        var title = info.info[0].element.title;
+        var type = info.info[0].element.type;
+        beef(info);
+        })
+        </script>
+        <script>
+            function analytics(){
+                var searches = [];
+                searches.push(document.getElementById("term").value.split(','))
+                var search = document.getElementById("term").value;
+                console.log('{{token}}');
+                console.log(document.getElementById("term").value);
+                var url = "https://www.googleapis.com/youtube/partner/v1/assetSearch?onBehalfOfContentOwner=indmusic&ownershipRestriction=none&q="+search+"&access_token="+'{{token}}';
+
+                $.ajax({url:url,
+                async: false,
+                dataType: 'json',
+                success: function(data){
+                    console.log(data);
+                    $(".results").show();
+                    if(data.items){
+                    for(i=0;i<data.items.length;i++){
+                        $('#table tr:last').after('<tr><td>'+data.items[i].id+'</td><td>'+data.items[i].isrc+'</td><td>'+data.items[i].title+'</td><td>'+data.items[i].type+'</td></tr>')
+                    }
+                    }
+                }})
+  }
+        </script>
+        <style type="text/css">
+            #main {
+                width
+            }
+            #freewall2 {
+                width: 80%;
+                margin: 10px;
+                background: #b2b2b2;
+                float: left;
+                width: 120px;
+                height: 120px;
+            }
+            p.more{
+                width: 150px;
+                height: 120px;
+                display: table-cell;
+                vertical-align:middle;
+                text-align:center;
+                font-size:80%;
+            }
+            tr:nth-child(even){
+                background-color: #b2b2b2;
+            }
+        </style>
+
+	</head>
+        <body>
+        <div data-role="page" id="login" style="background-color:white">
+        <div data-role="main"><center><img style="margin-top:150px;" src="/public/logo.png"></center></div>
+        <div><center>Please Login to continue</center></div>
+        <div><center><a href="/auth" data-transition="fade" style="font-size:20px" class="pt-touch-button">Login</a></center>
+        </div>  
+            </div>
+        <div data-role="page" id="main" style="background-color:white">
+        <div id="main-nav" style="height:55px;background-color:#555555;color:#ffffff"><nav style="height:55px;float:right;padding-right:32px;background-color:#F9F9F9;color:#555555"><ul style="list-style:none;width:300px"><li style="height:55px;float:left">Welcome User</li></ul></nav></div>
+        <div data-role="main"><center><img style="margin-top:150px;" src="/public/logo.png"></center></div>
+        <div><center>Administrator Menu</center></div>
+        <div><center><a href="#audit" data-transition="fade" class="pt-touch-button">CMS Audit</a><a href="#release" data-transition="fade" class="pt-touch-button">Asset Release</a></center>
+        </div>
+        </div>
+<div style="background-color:white" data-role="page" id="audit">
+<div><img style="margin-left:250px" src="/public/logo.png"></div>
+<h3><center>InDMusic Bulk and Quick Audit Dashboard</center></h3>
+<div style="text-align:center;border:dashed;width:45%;height:250px;float:left">
+    <p>Use the below section to enter an Asset ID or ISRC</p>
+    <p>Your result will be returned below</p>
+    <center><form style="width:60%" name="ISRC_input" method="get">
+      Search Terms:<input type="text" name="isrc" id="term">
+      <input type="button" value="Submit" onclick="analytics()">
+    </form></center>
+</div>
+<div style="text-align:center;border:dashed;width:45%;height:250px;float:right">
+  <p>Upload a headerless csv with one row of asset ID's or ISRC's</p>
+    <br>
+    <br>
+    <br>
+  <center><form
+     style="width:60%"
+     method="post"
+     enctype="multipart/form-data" 
+     action="/upload" >
+    <input type="file" name="csv"> 
+    <input type="submit" value="Submit">
+  </form></center>
+</div>
+
+<div id="smoosh" class="download" style="display: none"><a href="/download">Download</a></div>
+<div class="results" style="display: none">
+  <table id="table" style="width:100%;color:#ffffff;background-color:#555555"><tr><th>Asset ID</th><th>ISRC</th><th>Title</th><th>Type</th></tr>
+    </table>
+</div>
+            </div>
+            
+<div style="background-color:white" data-role="page" id="release">
+  <div><img style="margin-left:350px" src="/public/logo.png"></div>
+<h2><center>InDMusic TuneCore Reference Deactivation Dashboard</center></h2>
+<h4><center>Upload a csv file with the Asset IDs or ISRC codes that you want to remove</center></h4>
+<div style="text-align:center;border:dashed;width:45%;height:250px;float:left">
+<div style="margin:60px 10px">
+<p><b>Be sure that the list of id's only reside in the FIRST column</b></p>
+<center><form
+  style="width:60%"
+  method="post"
+  enctype="multipart/form-data" 
+  action="/upload" >
+<input type="file" name="csv"> 
+<input type="submit" value="Submit">
+</form></center>
+
+</div>
+</div>
+<div id="progress" style="text-align:center;border:dashed;width:45%;height:250px;float:right">
+    <div id="pulse"></div>
+</div>
+<div id="references">
+</div>
+    </div>
+</body>
+</html>

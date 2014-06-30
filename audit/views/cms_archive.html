@@ -1,0 +1,106 @@
+<title>I.M.A.T (InDMusic Massive Audit Tool)</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="./public/freewall.js"></script>
+<script>
+  var counter = 0;
+  var socket = io.connect('http://ec2-54-84-17-96.compute-1.amazonaws.com/');
+  socket.on('progress', function(info){
+  //var data = JSON.parse(info);
+  console.log(info.info);
+  if(info.info === "finished"){
+    console.log("this should execute");
+    $(".download").show();
+  }
+  //Loop through the results of each 'data' that is recieved and append to the '#table' in the results div
+  //using jQuery
+  counter++;
+  //console.log(counter);
+  var k = 0;
+  $(".results").show();
+  var id = info.info[0].element.id;
+  var isrc = info.info[0].element.isrc;
+  var title = info.info[0].element.title;
+  var type = info.info[0].element.type;
+  $('#table tr:last').after('<tr><td>'+id+'</td><td>'+isrc+'</td><td>'+title+'</td><td>'+type+'</td></tr>')
+  })
+  /*info.map(function(element){
+  var url = "https://www.googleapis.com/youtube/partner/v1/assetSearch?onBehalfOfContentOwner=indmusic&ownershipRestriction=none&q="+element+"&access_token="+'{{token}}';
+  setTimeout(function(){
+  $.ajax({url:url,
+  async: false,
+  dataType: 'json',
+  success: function(data){
+  //console.log(data);
+  if(data.items){
+  for(i=0;i<data.items.length;i++){
+              //console.log(counter);
+	      if(data.items[i].type != "art_track_video"){
+   $('#table tr:last').after('<tr><td>'+data.items[i].id+'</td><td>'+data.items[i].isrc+'</td><td>'+data.items[i].title+'</td><td>'+data.items[i].type+'</td></tr>')
+	      }
+  }
+  }
+  else{
+    console.log(data);
+  }
+}})
+}, 1000)
+})
+  //console.log(data.items[i].id)
+
+  })*/
+</script>
+<script>
+  function analytics(){
+  var searches = []
+  searches.push(document.getElementById("term").value.split(','))
+  var search = document.getElementById("term").value;
+  console.log('{{token}}');
+  console.log(document.getElementById("term").value);
+  var url = "https://www.googleapis.com/youtube/partner/v1/assetSearch?onBehalfOfContentOwner=indmusic&ownershipRestriction=none&q="+search+"&access_token="+'{{token}}';
+  
+  $.ajax({url:url,
+  async: false,
+  dataType: 'json',
+  success: function(data){
+  console.log(data);
+  $(".results").show();
+  if(data.items){
+     for(i=0;i<data.items.length;i++){
+		 $('#table tr:last').after('<tr><td>'+data.items[i].id+'</td><td>'+data.items[i].isrc+'</td><td>'+data.items[i].title+'</td><td>'+data.items[i].type+'</td></tr>')
+	}  
+  }
+  }})
+  }
+</script>
+
+
+<h1>InDMusic Bulk and Quick Audit Dashboard</h1>
+<p>Use the below section to enter an Asset ID or ISRC</p>
+<p>Your result will be returned below</p>
+<form name="ISRC_input" method="get">
+Search Terms:<input type="text" name="isrc" id="term">
+<input type="button" value="Submit" onclick="analytics()">
+</form>
+<p>Use this section to upload a headerless csv with one row of asset ID's or ISRC or both.</p>
+<p>A full audit will be listed below and you will be able to download upon completion</p>
+<form
+  method="post"
+  enctype="multipart/form-data" 
+  action="/upload" >
+<input type="file" name="csv"> 
+<input type="submit" value="Submit">
+</form>
+<div id="freewall" class="download" style="display: none"><a href="/download">Click here to download</a></div>
+<div class="results" style="display: none">
+  <table id="table" border='+"1"+'><tr><th>Asset ID</th><th>ISRC</th><th>Title</th><th>Type</th></tr>
+    </table>
+</div>
+<script>
+ /* var socket = io.connect('http://ec2-54-84-17-96.compute-1.amazonaws.com/');
+  socket.on('progress', function(info){
+     var wall = new freewall("#freewall");
+     wall.appendBlock('<div><p>Block Block</p></div>')
+     wall.fitWidth();
+  })*/
+</script>

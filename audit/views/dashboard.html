@@ -1,0 +1,35 @@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript">
+  function analytics(id){
+  console.log(id);
+  var url = "https://www.googleapis.com/youtube/partner/v1/claimSearch?assetId="+id+"&access_token="+'{{auth}}';
+  $.ajax({url: url,
+  async: false,
+  dataType: 'json',
+  success: function(data){
+  if(data.pageInfo.totalResults == 0){
+  console.log("we aint got shit");
+  }
+  else{
+  console.log("we got something");
+  }
+  }})}
+</script>
+
+<h1>AudioSocket DASHBOARD - NODE.JS</h1>
+<table border="1">
+  <tr>
+    <th>Email</th>
+    <th>Channel ID</th>
+  </tr>
+{%for i in data %}
+  <tr>    
+    <!-- <td{% if loop.first %} class="first"{% endif %}>
+      <a href="#", onclick="analytics('{{i.assetId}}')"> {{i.assetId}}<a></td> -->
+    <td>{{i.username}}</td>
+    <td>{{channel}}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+

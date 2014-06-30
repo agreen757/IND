@@ -1,0 +1,122 @@
+<title>I.M.A.T (InDMusic Massive Audit Tool)</title>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="./public/freewall.js"></script>
+<script>
+  var counter = 0;
+  var socket = io.connect('http://ec2-54-84-17-96.compute-1.amazonaws.com/');
+  socket.on('progress', function(info){
+  //var data = JSON.parse(info);
+  console.log(info.info);
+  if(info.info === "finished"){
+    console.log("this should execute");
+    $(".download").show();
+  }
+  //Loop through the results of each 'data' that is recieved and append to the '#table' in the results div
+  //using jQuery
+  counter++;
+  //console.log(counter);
+  var k = 0;
+  $(".results").show();
+  var id = info.info[0].element.id;
+  var isrc = info.info[0].element.isrc;
+  var title = info.info[0].element.title;
+  var type = info.info[0].element.type;
+  beef(info);
+  })
+
+ socket.on('nothing', function(info){
+  //console.log(info.info)
+  var html = "<tr><td>Item Not in CMS</td><td>null</td><td>null</td><td>null</td></tr>"
+  $('#table tr:last').hide().after(html).fadeIn(1000);
+})
+
+</script>
+<script>
+  function analytics(){
+  var searches = [];
+  searches.push(document.getElementById("term").value.split(','))
+  var search = document.getElementById("term").value;
+  console.log('{{token}}');
+  console.log(document.getElementById("term").value);
+  var url = "https://www.googleapis.com/youtube/partner/v1/assetSearch?onBehalfOfContentOwner=indmusic&ownershipRestriction=none&q="+search+"&access_token="+'{{token}}';
+  
+  $.ajax({url:url,
+  async: false,
+  dataType: 'json',
+  success: function(data){
+  console.log(data);
+  $(".results").show();
+  if(data.items){
+     for(i=0;i<data.items.length;i++){
+		 $('#table tr:last').after('<tr><td>'+data.items[i].id+'</td><td>'+data.items[i].isrc+'</td><td>'+data.items[i].title+'</td><td>'+data.items[i].type+'</td></tr>')
+	}  
+  }
+  }})
+  }
+</script>
+<style type="text/css">
+    #main {
+      width 
+    }
+    #freewall2 {
+      width: 80%;
+      margin: 10px;
+      background: #b2b2b2;
+      float: left;
+      width: 120px;
+      height: 120px;
+    }
+    p.more{
+      width: 150px;
+      height: 120px;
+      display: table-cell;
+      vertical-align:middle;
+      text-align:center;
+      font-size:80%;
+    }
+    tr:nth-child(even){
+      background-color: #b2b2b2;
+    }
+</style>
+<script>
+<input id="man" type="submit" value="Submit"><input id="man" type="submit" value="Submit"><input id="man" type="submit" value="Submit"><input id="man" type="submit" value="Submit"><input id="man" type="submit" value="Submit">  function beef(info){
+     var id = info.info[0].element.id;
+     var title = info.info[0].element.title;
+     var isrc = info.info[0].element.isrc;
+     var type = info.info[0].element.type;
+     var html = "<tr><td>"+id+"</td><td>"+isrc+"</td><td>"+title+"</td><td>"+type+"</td></tr>"
+     //var html = "<div id=\"freewall2\"><p class=\"more\">Processed...<br>"+title+"<br>"+isrc+"<br>"+id+"</p></div>";
+     //$(html).hide().appendTo(document.body).fadeIn(1000);
+     $('#table tr:last').hide().after(html).fadeIn(1000);
+     /*var wall = new freewall("#freewall2");
+     wall.fitWidth();*/
+  }
+</script>
+
+<div><img style="margin-left:350px" src="./public/logo.png"></div>
+<h2><center>InDMusic Bulk and Quick Audit Dashboard</center></h2>
+<div style="text-align:center;border:dashed;width:45%;height:50%;float:left">
+    <p>Use the below section to enter an Asset ID or ISRC</p>
+    <p>Your result will be returned below</p>
+    <form name="ISRC_input" method="get">
+      Search Terms:<input type="text" name="isrc" id="term">
+      <input type="button" value="Submit" onclick="analytics()">
+    </form>
+</div>
+<div style="text-align:center;border:dashed;width:45%;height:50%;float:right">
+  <p>Upload a headerless csv with one row of asset ID's or ISRC's</p>
+  <form
+     method="post"
+     enctype="multipart/form-data" 
+     action="/upload" >
+    <input type="file" name="csv"> 
+    <input type="submit" value="Submit">
+  </form>
+</div>
+
+<div id="smoosh" class="download" style="display: none"><a href="/download">Download</a></div>
+<div class="results" style="display: none">
+  <table id="table" style="width:100%;color:#ffffff;background-color:#555555"><tr><th>Asset ID</th><th>ISRC</th><th>Title</th><th>Type</th></tr>
+    </table>
+</div>
