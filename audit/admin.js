@@ -112,6 +112,7 @@ app.post('/deactivate', function(req, res){
 })
 
 app.get('/drive', function(req,res){
+    var counter = 0;
     //perform request in drive
     //push results to an array
     //emit the array to the html with slight delay in between
@@ -129,18 +130,19 @@ app.get('/drive', function(req,res){
          //****LOOP THROUGH RESULTS OF THE FOLDER LISTING
          
          var childParse = JSON.parse(body);
-         for(i in childParse.items){
-             var nameGetter = 'https://www.googleapis.com/drive/v2/files/'+childParse.items[i].id+'?access_token='+req._passport.session.user[0].token;
+         childParse.items.map(function(element){
+             counter++;
+             var nameGetter = 'https://www.googleapis.com/drive/v2/files/'+element.id+'?access_token='+req._passport.session.user[0].token;
              demand.get(nameGetter, function(err,response,body){
                  var nameParse = JSON.parse(body);
-                 console.log(nameParse.title+" "+i+" "+childParse.items.length);
+                 console.log(nameParse.title+" "+counter+" "+childParse.items.length)
                  folderNames.push(nameParse.title);
-                 if(i == childParse.items.length - 1){
+                 /*if(i == childParse.items.length - 1){
                      console.log("done?")
-                 }
+                 }*/
              })
              
-         }
+         })
  })
 })
 
