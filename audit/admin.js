@@ -139,12 +139,7 @@ app.get('/drive', function(req,res){
                  folderNames.push(nameParse.title);
                  if(counter == childParse.items.length){
                      console.log("done?")
-                     folderNames.map(function(element){
-                         var a = 0;
-                         var b = setTimeout(function(){  
-                             io.sockets.emit('folders', {'folderName':element})
-                         },a+=500); 
-                     })
+                     io.sockets.emit('folders',{'folderNames':folderNames})
                  }
              })
              
