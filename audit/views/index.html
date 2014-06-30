@@ -32,7 +32,7 @@
             socket.on('folders', function(folder){
                 console.log(folder);
                 $('.pt-touch-button2').hide();
-                folder.folderNames.title.sort().map(function(element){
+                folder.folderNames.map(function(element){
                     var a = 0;
                     setTimeout(function(){
                         var html = "<div style=\"width:200px; height:200px\" id=\"results\"><p class=\"more\">"+element.title+"</p></div>";
