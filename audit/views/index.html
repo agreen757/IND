@@ -35,7 +35,7 @@
                     var a = 0;
                     setTimeout(function(){
                         var html = "<div id=\"results\"><p class=\"more\">"+element+"</p></div>";
-                        $(html).hide().appendTo(document.body).fadeIn(1000);  
+                        $(html).hide().appendTo('.whatevs').fadeIn(1000);  
                     },a+=2000);
                 })
             })
@@ -173,7 +173,7 @@
   <div><img style="margin-left:350px" src="/public/logo.png"></div>
 <h2><center>InDMusic File Ingestion Automation</center></h2>
 <h4><center>Please press Update to continue</center></h4>
-<div><center><a href="/drive" data-transition="fade" style="font-size:20px" class="pt-touch-button">Update</a></center>
+<div class='whatevs'><center><a href="/drive" data-transition="fade" style="font-size:20px" class="pt-touch-button">Update</a></center>
         </div>
 <div></div>
 <div id="references">
