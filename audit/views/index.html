@@ -32,6 +32,7 @@
             socket.on('folders', function(folder){
                 console.log(folder);
                 $('.pt-touch-button2').hide();
+                $('prog').hide();
                 folder.folderNames.map(function(element){
                     var a = 0;
                     setTimeout(function(){
