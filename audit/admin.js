@@ -115,13 +115,18 @@ app.get('/drive', function(req,res){
     //perform request in drive
     //push results to an array
     //emit the array to the html with slight delay in between
-    var url = "https://www.googleapis.com/drive/v2/files?access_token="+req._passport.session.user[0].token;
+    var url = "https://www.googleapis.com/drive/v2/files/0B7DV9xnP87yFU0JvenMzT3FUbkE/children?access_token="+req._passport.session.user[0].token;
      console.log(url);
      demand.get(url, function(err,response,body){
          if(err){
             console.log(err);
          }
      console.log(body);
+         var parse = JSON.parse(body);
+         for(i in parse.items){
+             
+             
+         }
  })
 })
 
