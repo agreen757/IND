@@ -116,23 +116,28 @@ app.get('/drive', function(req,res){
     //push results to an array
     //emit the array to the html with slight delay in between
     
-    //***** USING THIS LINK https://developers.google.com/drive/v2/reference/children/list#try-it
+    //***** LISTING THE CHILDREN OF THE FOLDER ID - THIS IS HOW WE GET THE CONTENTS OF OUR CHANNEL PARTNERS FOLDER https://developers.google.com/drive/v2/reference/children/list#try-it
+    
     var url = "https://www.googleapis.com/drive/v2/files/0B7DV9xnP87yFU0JvenMzT3FUbkE/children?access_token="+req._passport.session.user[0].token;
      var folderNames = []
-     console.log(url);
+     //console.log(url);
      demand.get(url, function(err,response,body){
          if(err){
             console.log(err);
          }
-     console.log(body);
-         var childParse = JSON.parse(body);
+         
          //****LOOP THROUGH RESULTS OF THE FOLDER LISTING
+         
+         var childParse = JSON.parse(body);
          for(i in childParse.items){
              var nameGetter = 'https://www.googleapis.com/drive/v2/files/'+childParse.items[i].id+'?access_token='+req._passport.session.user[0].token;
              demand.get(nameGetter, function(err,response,body){
                  var nameParse = JSON.parse(body);
                  console.log(nameParse.title);
                  folderNames.push(nameParse.title);
+                 if(childParse.items[i] == childParse.items.length - 1){
+                     console.log("done?")
+                 }
              })
              
          }
