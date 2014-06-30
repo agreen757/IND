@@ -16,19 +16,22 @@
             if(info.info === "finished"){
             console.log("this should execute");
             $(".download").show();
-        }
-        //Loop through the results of each 'data' that is recieved and append to the '#table' in the            results div
-        //using jQuery
-        counter++;
-        //console.log(counter);
-        var k = 0;
-        $(".results").show();
-        var id = info.info[0].element.id;
-        var isrc = info.info[0].element.isrc;
-        var title = info.info[0].element.title;
-        var type = info.info[0].element.type;
-        beef(info);
-        })
+            }
+                //Loop through the results of each 'data' that is recieved and append to the '#table' in the            results div
+                //using jQuery
+                counter++;
+                //console.log(counter);
+                var k = 0;
+                $(".results").show();
+                var id = info.info[0].element.id;
+                var isrc = info.info[0].element.isrc;
+                var title = info.info[0].element.title;
+                var type = info.info[0].element.type;
+                beef(info);
+            })
+            socket.on('folders', function(folder){
+                console.log(folder);
+            })
         </script>
         <script>
             function analytics(){
