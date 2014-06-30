@@ -112,7 +112,7 @@ app.post('/deactivate', function(req, res){
 })
 
 app.get('/drive', function(req,res){
-    res.redirect('/#ingest')
+    res.redirect('/index/#ingest')
     var socket = req.sessionStore.Adrian;
     var counter = 0;
     //perform request in drive
