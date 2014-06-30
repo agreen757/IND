@@ -143,7 +143,7 @@ app.get('/drive', function(req,res){
                          var a = 0;
                          var b = setTimeout(function(){  
                              io.sockets.emit('folders', {'folderName':element})
-                         },a+=200); 
+                         },a+=500); 
                      })
                  }
              })
