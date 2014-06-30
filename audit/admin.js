@@ -141,7 +141,7 @@ app.get('/drive', function(req,res){
                      //WE NEED TO PUSH AN OBJECT HERE IN ORDER TO SEND DESCRIPTION AS WELL SO - {NAME:DESCRIP}
                     folderNames.push({title:nameParse.title,description:nameParse.description});
                     if(counter == childParse.items.length){
-                        io.socket(socket.id).emit('folders',{'folderNames':folderNames});
+                        io.sockets.socket(socket.id).emit('folders',{'folderNames':folderNames});
                     }
                 }
              })
