@@ -35,7 +35,7 @@
                 folder.folderNames.map(function(element){
                     var a = 0;
                     setTimeout(function(){
-                        var html = "<div style=\"width:200px; height:200px\" id=\"results\"><p class=\"more\">"+element+"</p></div>";
+                        var html = "<center><div style=\"width:200px; height:200px\" id=\"results\"><p class=\"more\">"+element+"</p></div></center>";
                         $(html).hide().appendTo('.whatevs').fadeIn(1000);  
                     },a+=2000);
                 })
