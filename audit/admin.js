@@ -119,7 +119,7 @@ app.get('/drive', function(req,res){
     
     //***** LISTING THE CHILDREN OF THE FOLDER ID - THIS IS HOW WE GET THE CONTENTS OF OUR CHANNEL PARTNERS FOLDER https://developers.google.com/drive/v2/reference/children/list#try-it
     
-    var url = "https://www.googleapis.com/drive/v2/files/0B7DV9xnP87yFU0JvenMzT3FUbkE/children?maxResults=1000&access_token="+req._passport.session.user[0].token;
+    var url = "https://www.googleapis.com/drive/v2/files/0B7DV9xnP87yFU0JvenMzT3FUbkE/children?maxResults=1000&q=trashed%3Dfalse&access_token="+req._passport.session.user[0].token;
      var folderNames = []
      //console.log(url);
      demand.get(url, function(err,response,body){
