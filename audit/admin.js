@@ -137,9 +137,10 @@ app.get('/drive', function(req,res){
                  counter++;
                  console.log(nameParse.title+" "+counter+" "+childParse.items.length)
                  if(nameParse.mimeType == 'application/vnd.google-apps.folder'){
-                    folderNames.push(nameParse.title);
+                     //WE NEED TO PUSH AN OBJECT HERE IN ORDER TO SEND DESCRIPTION AS WELL SO - {NAME:DESCRIP}
+                    folderNames.push({title:nameParse.title,description:nameParse.description});
                     if(counter == childParse.items.length){
-                        io.sockets.emit('folders',{'folderNames':folderNames})
+                        io.sockets.emit('folders',{'folderNames':folderNames});
                     }
                 }
              })
