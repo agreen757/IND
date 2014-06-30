@@ -5,7 +5,7 @@ var util = require('util');
 var fs = require('graceful-fs');
 var async = require('async');
 var htmlfile = "index.html";
-var httpSync = require('httpsync')
+//var httpSync = require('httpsync')
 var MongoClient = require('mongodb').MongoClient;
 var Server = require('mongodb').Server;
 var cons = require('consolidate');
@@ -109,6 +109,20 @@ app.get('/auth/callback',
 
 app.post('/deactivate', function(req, res){
     //insert the deactivator stuff here.
+})
+
+app.get('/drive', function(req,res){
+    //perform request in drive
+    //push results to an array
+    //emit the array to the html with slight delay in between
+    var url = "https://www.googleapis.com/drive/v2/files?access_token="+request._passport.session.user[0].token;
+     console.log(url);
+     demand.get(url, function(err,response,body){
+         if(err){
+            console.log(err);
+         }
+     console.log(body);
+ })
 })
 
 app.post('/upload', function(req, res){
