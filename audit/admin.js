@@ -137,9 +137,9 @@ app.get('/drive', function(req,res){
                  counter++;
                  console.log(nameParse.title+" "+counter+" "+childParse.items.length)
                  folderNames.push(nameParse.title);
-                 /*if(i == childParse.items.length - 1){
+                 if(counter == childParse.items.length - 1){
                      console.log("done?")
-                 }*/
+                 }
              })
              
          })
