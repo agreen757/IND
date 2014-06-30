@@ -31,6 +31,10 @@
             })
             socket.on('folders', function(folder){
                 console.log(folder);
+                folder.folderNames.map(function(element){
+                    var html = "<div id=\"results\"><p class=\"more\">"+element+"</p></div>";
+        $(html).hide().appendTo(document.body).fadeIn(1000);
+                })
             })
         </script>
         <script>
