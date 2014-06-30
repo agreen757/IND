@@ -35,7 +35,7 @@
                 folder.folderNames.map(function(element){
                     var a = 0;
                     setTimeout(function(){
-                        var html = "<center><div style=\"width:200px; height:200px\" id=\"results\"><p class=\"more\">"+element+"</p></div></center>";
+                        var html = "<div style=\"width:200px; height:200px\" id=\"results\"><p class=\"more\">"+element+"</p></div>";
                         $(html).hide().appendTo('.whatevs').fadeIn(1000);  
                     },a+=2000);
                 })
@@ -109,7 +109,7 @@
         <div id="main-nav" style="height:55px;background-color:#555555;color:#ffffff"><nav style="height:55px;float:right;padding-right:32px;background-color:#F9F9F9;color:#555555"><ul style="list-style:none;width:300px"><li style="height:55px;float:left">Welcome {{profile}}</li></ul></nav></div>
         <div data-role="main"><center><img style="margin-top:150px;" src="/public/logo.png"></center></div>
         <div><center>Administrator Menu</center></div>
-        <div><center><a href="#audit" data-transition="fade" class="pt-touch-button">CMS Audit</a><a href="#release" data-transition="fade" class="pt-touch-button">Asset Release</a></center>
+        <div><center><a href="#audit" data-transition="fade" class="pt-touch-button">CMS Audit</a><a href="#release" data-transition="fade" class="pt-touch-button">Asset Release</a><a href="#ingest" data-transition="fade" class="pt-touch-button">Asset Release</a></center>
         </div>
         </div>
 <div style="background-color:white" data-role="page" id="audit">
