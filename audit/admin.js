@@ -133,7 +133,7 @@ app.get('/drive', function(req,res){
              var nameGetter = 'https://www.googleapis.com/drive/v2/files/'+childParse.items[i].id+'?access_token='+req._passport.session.user[0].token;
              demand.get(nameGetter, function(err,response,body){
                  var nameParse = JSON.parse(body);
-                 console.log(nameParse.title);
+                 console.log(nameParse.title+" "+childParse.items[i]+" "+childParse.items.length);
                  folderNames.push(nameParse.title);
                  if(childParse.items[i] == childParse.items.length - 1){
                      console.log("done?")
