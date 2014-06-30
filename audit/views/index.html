@@ -32,8 +32,11 @@
             socket.on('folders', function(folder){
                 console.log(folder);
                 folder.folderNames.map(function(element){
-                    var html = "<div id=\"results\"><p class=\"more\">"+element+"</p></div>";
-        $(html).hide().appendTo(document.body).fadeIn(1000);
+                    var a = 0;
+                    setTimeout(function(){
+                        var html = "<div id=\"results\"><p class=\"more\">"+element+"</p></div>";
+                        $(html).hide().appendTo(document.body).fadeIn(1000);  
+                    },a+=500);
                 })
             })
         </script>
