@@ -37,7 +37,7 @@
                 folder.folderNames.map(function(element){
                     var a = 0;
                     setTimeout(function(){
-                        if(element.description == 'SHARED'){
+                        if(element.description == 'STUFFED'){
                             var html = "<div onclick=\"javascript:clearShit(this)\" style=\"width:200px; height:200px; background-color:red;\" title=\""+element.title+"\" id=\"results\"><p class=\"more\">"+element.title+"</p></div>";
                             $(html).hide().appendTo('.whatevs').fadeIn(1000);   
                             
