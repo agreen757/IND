@@ -144,10 +144,9 @@ app.post('/details', function(req,res){
                                 if(err){console.log(err)}
                                 
                                 //res.send(row_data);
-                                //console.log(row_data);
-                                var woo = JSON.parse(row_data)
+                                console.log(row_data._xml);
                                 var parser = new xml2js.Parser();
-                                parser.parseString(woo._xml, function(err,result){
+                                parser.parseString(row_data._xml, function(err,result){
                                     if(err){console.log(err)}
                                     
                                     console.log(result);
