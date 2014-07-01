@@ -14,6 +14,7 @@ var demand = require('request');
 var mongoclient = new MongoClient(new Server('localhost', 27017, {'native_parser' : true}));
 var db = mongoclient.db('indmusic');
 var googleapis = require('googleapis');
+var xml2js = require('xml2js');
 var csv = require('ya-csv')
 var OAuth2Client = googleapis.OAuth2Client;
 var oauth2Client =
@@ -142,8 +143,14 @@ app.post('/details', function(req,res){
                             my_sheet.getRows( 1, function(err, row_data){
                                 if(err){console.log(err)}
                                 
-                                res.send(row_data);
-                                console.log(row_data);
+                                //res.send(row_data);
+                                //console.log(row_data);
+                                var parser = new xml2js.Parser();
+                                parser.parseString(row_data._xml, function(err,result){
+                                    if(err){console.log(err)}
+                                    
+                                    console.log(result);
+                                })
                             })
                     })
                 }
