@@ -56,8 +56,11 @@
             }
             
             function clearShit(item){
-               // $('div[id^="results"]').hide();
+               $('div[id^="results"]').hide();
                console.log(item.title);
+                $.post('/details',{title:item.title},function(resp){
+                    console.log(resp);
+                })
             }
         </script>
         <script>

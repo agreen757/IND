@@ -111,6 +111,12 @@ app.post('/deactivate', function(req, res){
     //insert the deactivator stuff here.
 })
 
+app.post('/details', function(req,res){
+    console.log("got it...");
+    res.send("got it");
+    console.log(req.body);
+})
+
 app.post('/drive', function(req,res){
     //SENDING RES.END TO STOP THE CLIENT FROM RE-REQUESTING
     res.end('jyeah');
