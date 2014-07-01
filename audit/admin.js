@@ -142,7 +142,7 @@ app.post('/details', function(req,res){
                                 }
                             })
                     })
-                })
+                }
             })
         }
     })
