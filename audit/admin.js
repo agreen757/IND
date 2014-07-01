@@ -128,7 +128,8 @@ app.post('/details', function(req,res){
                 if(err){console.log(err)}
                 
                 var childParse = JSON.parse(body);
-                var detailsUrl = "https://www.googleapis.com/drive/v2/files/"+childParse.id+"?access_token="+req._passport.session.user[0].token;
+                console.log(childParse);
+                var detailsUrl = "https://www.googleapis.com/drive/v2/files/"+childParse.items[0].id+"?access_token="+req._passport.session.user[0].token;
                 demand.get(detailsUrl, function(err,response,body){
                     if(err){console.log(err)}
                     
