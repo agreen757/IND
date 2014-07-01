@@ -137,9 +137,7 @@ app.post('/details', function(req,res){
                         my_sheet.setAuth('uploads@indmusicnetwork.com','ForThePeople', function(err){
                             my_sheet.getRows( 1, function(err, row_data){
                                 res.send(row_data);
-                                for(i in row_data){
-                                    console.log(row_data[i])
-                                }
+                                console.log(row_data);
                             })
                     })
                 }
