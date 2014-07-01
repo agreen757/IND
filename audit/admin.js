@@ -115,6 +115,13 @@ app.post('/details', function(req,res){
     console.log("got it...");
     res.send("got it");
     console.log(req.body);
+    var url = "https://www.googleapis.com/drive/v2/files?q=title+%3D+'"+req.body.title+"'&access_token="+req._passport.session.user[0].token;
+    demand.get(url, function(err,response,body){
+        if(err){console.log(err)}
+        
+        var parse = JSON.parse(body);
+        console.log(body);
+    })
 })
 
 app.post('/drive', function(req,res){
