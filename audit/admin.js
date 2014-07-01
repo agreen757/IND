@@ -129,7 +129,7 @@ app.post('/details', function(req,res){
                 if(err){console.log(err)}
                 
                 var childParse = JSON.parse(body);
-                console.log(childParse);
+                //console.log(childParse);
                 var detailsUrl = "https://www.googleapis.com/drive/v2/files/"+childParse.items[0].id+"?access_token="+req._passport.session.user[0].token;
                 demand.get(detailsUrl, function(err,response,body){
                     if(err){console.log(err)}
@@ -145,12 +145,20 @@ app.post('/details', function(req,res){
                                 
                                 //res.send(row_data);
                                 console.log(row_data);
+                                row_data.map(function(element){
+                                    var parser = new xml2js.Parser();
+                                    parser.parseString(element._xml, function(err,result){
+                                        if(err){console.log(err)}
+                                        
+                                        console.log(result);
+                                    })
+                                })
                                 var parser = new xml2js.Parser();
-                                parser.parseString(row_data._xml, function(err,result){
+                                /*parser.parseString(row_data._xml, function(err,result){
                                     if(err){console.log(err)}
                                     
                                     console.log(result);
-                                })
+                                })*/
                             })
                     })
                 }
