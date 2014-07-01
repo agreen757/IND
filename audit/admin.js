@@ -133,8 +133,9 @@ app.post('/details', function(req,res){
                     
                     var detailsParse = JSON.parse(body);
                     if(detailsParse.mimeType == "application/vnd.google-apps.spreadsheet"){
-                        var my_sheet = new GoogleSpreadsheet(detailsParse.id);
-                        console.log(detailsParse.id)
+                        //var my_sheet = new GoogleSpreadsheet(detailsParse.id);
+                        var my_sheet = new GoogleSpreadsheet('0ArDV9xnP87yFdG80VlpfcU9ObTRmSldrODdLU1c2UkE');
+                        console.log(detailsParse.id);   
                         my_sheet.setAuth('adrian@indmusicnetwork.com','ImWithJessica', function(err){
                             my_sheet.getRows( 1, function(err, row_data){
                                 if(err){console.log(err)}
