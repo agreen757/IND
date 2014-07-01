@@ -112,6 +112,7 @@ app.post('/deactivate', function(req, res){
 })
 
 app.post('/drive', function(req,res){
+    //SENDING RES.END TO STOP THE CLIENT FROM RE-REQUESTING
     res.end('jyeah');
     var socket = req.sessionStore.Adrian;
     var counter = 0;
