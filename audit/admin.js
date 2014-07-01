@@ -136,6 +136,8 @@ app.post('/details', function(req,res){
                         var my_sheet = new GoogleSpreadsheet(detailsParse.id);
                         my_sheet.setAuth('uploads@indmusicnetwork.com','ForThePeople', function(err){
                             my_sheet.getRows( 1, function(err, row_data){
+                                if(err){console.log(err)}
+                                
                                 res.send(row_data);
                                 console.log(row_data);
                             })
