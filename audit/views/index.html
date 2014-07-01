@@ -60,13 +60,13 @@
                console.log(item.title);
                 $.post('/details',{title:item.title},function(resp){
                     console.log(resp);
-                    var header = "<table id=\"table\" style=\"width:100%;color:#ffffff;background-color:#555555\"><tr><th>"+resp[0]._chk2m+"</th><th>"+resp[0]._ciyn3+"</th><th>"+resp[0]._ckd7g+"</th><th>"+resp[0]._clrrx+"</th><th>"+resp[0]._cokwr+"</th><th>"+resp[0]._cpzh4+"</th></th><th>"+resp[0]._cre1l+"</th></th><th>"+resp[0]._cssly+"</th></th><th>"+resp[0]._cyevm+"</th></th><th>"+resp[0]._cztg3+"</th></th><th>"+resp[0]._d2mkx+"</th></th><th>"+resp[0]._d180g+"</th></tr></table>";
+                    var header = "<table id=\"table2\" style=\"width:100%;color:#ffffff;background-color:#555555\"><tr><th>"+resp[0]._chk2m+"</th><th>"+resp[0]._ciyn3+"</th><th>"+resp[0]._ckd7g+"</th><th>"+resp[0]._clrrx+"</th><th>"+resp[0]._cokwr+"</th><th>"+resp[0]._cpzh4+"</th></th><th>"+resp[0]._cre1l+"</th></th><th>"+resp[0]._cssly+"</th></th><th>"+resp[0]._cyevm+"</th></th><th>"+resp[0]._cztg3+"</th></th><th>"+resp[0]._d2mkx+"</th></th><th>"+resp[0]._d180g+"</th></tr></table>";
                     $(header).hide().appendTo('.whatevs').fadeIn(1000);
                     
                     for(i=2;i<resp.length;i++){
                         console.log(resp[i]._chk2m);
                         //var rows = "<tr><td>"+resp[i]._chk2m+"</td><td>"+resp[i]._ciyn3+"</td><tr>"+resp[i]._ckd7g+"</td><td>"+resp[i]._clrrx+"</td><td>"+resp[i]._cokwr+"</td><td>"+resp[i]._cpzh4+"</td></td><td>"+resp[i]._cre1l+"</td></td><td>"+resp[i]._cssly+"</td></td><td>"+resp[i]._cyevm+"</td></td><td>"+resp[i]._cztg3+"</td></td><td>"+resp[i]._d2mkx+"</td></td><td>"+resp[i]._d180g+"</td></tr>";
-                       $('#table tr:last').after("<tr><td>"+resp[i]._chk2m+"</td><td>"+resp[i]._ciyn3+"</td><tr>"+resp[i]._ckd7g+"</td><td>"+resp[i]._clrrx+"</td><td>"+resp[i]._cokwr+"</td><td>"+resp[i]._cpzh4+"</td></td><td>"+resp[i]._cre1l+"</td></td><td>"+resp[i]._cssly+"</td></td><td>"+resp[i]._cyevm+"</td></td><td>"+resp[i]._cztg3+"</td></td><td>"+resp[i]._d2mkx+"</td></td><td>"+resp[i]._d180g+"</td></tr>");
+                       $('#table2 tr:last').after("<tr><td>"+resp[i]._chk2m+"</td><td>"+resp[i]._ciyn3+"</td><tr>"+resp[i]._ckd7g+"</td><td>"+resp[i]._clrrx+"</td><td>"+resp[i]._cokwr+"</td><td>"+resp[i]._cpzh4+"</td></td><td>"+resp[i]._cre1l+"</td></td><td>"+resp[i]._cssly+"</td></td><td>"+resp[i]._cyevm+"</td></td><td>"+resp[i]._cztg3+"</td></td><td>"+resp[i]._d2mkx+"</td></td><td>"+resp[i]._d180g+"</td></tr>");
                     }
                 })
             }
