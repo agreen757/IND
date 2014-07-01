@@ -5,6 +5,7 @@ var util = require('util');
 var fs = require('graceful-fs');
 var async = require('async');
 var htmlfile = "index.html";
+var GoogleSpreadsheet = require('google-spreadsheet');
 //var httpSync = require('httpsync')
 var MongoClient = require('mongodb').MongoClient;
 var Server = require('mongodb').Server;
@@ -113,14 +114,37 @@ app.post('/deactivate', function(req, res){
 
 app.post('/details', function(req,res){
     console.log("got it...");
-    res.send("got it");
-    console.log(req.body);
+    //res.send("got it");
+    //console.log(req.body);
     var url = "https://www.googleapis.com/drive/v2/files?q=title+%3D+'"+req.body.title+"'&access_token="+req._passport.session.user[0].token;
     demand.get(url, function(err,response,body){
         if(err){console.log(err)}
         
         var parse = JSON.parse(body);
-        console.log(body);
+        if(parse.items[0].mimeType == "application/vnd.google-apps.folder"){
+            var childUrl = "https://www.googleapis.com/drive/v2/files/"+parse.items[0].id+"/children?maxResults=1000&q=trashed%3Dfalse&access_token="+req._passport.session.user[0].token;
+            demand.get(childUrl, function(err,response,body){
+                if(err){console.log(err)}
+                
+                var childParse = JSON.parse(body);
+                var detailsUrl = "https://www.googleapis.com/drive/v2/files/1J9jRpCpwwZ_b4nhufR8xlJvEsrQUKHdISFkye_omsvc?access_token="+req._passport.session.user[0].token;
+                demand.get(detailsUrl, function(err,response,body){
+                    if(err){console.log(err)}
+                    
+                    var detailsParse = JSON.parse(body);
+                    if(detailsParse.mimeType == "application/vnd.google-apps.spreadsheet"){
+                        var my_sheet = new GoogleSpreadsheet(detailsParse.id);
+                        my_sheet.setAuth('uploads@indmusicnetwork.com','ForThePeople', function(err){
+                            my_sheet.getRows( 1, function(err, row_data){
+                                res.send(row_data);
+                                for(i in row_data){
+                                    console.log(row_data[i])
+                                }
+                            })
+                    })
+                })
+            })
+        }
     })
 })
 
