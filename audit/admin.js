@@ -142,6 +142,9 @@ app.post('/drive', function(req,res){
                      //WE NEED TO PUSH AN OBJECT HERE IN ORDER TO SEND DESCRIPTION AS WELL SO - {NAME:DESCRIP}
                     folderNames.push({title:nameParse.title,description:nameParse.description});
                     if(counter == childParse.items.length){
+                        
+                        //******THIS IS SOMEHOW STILL EMITTING TO ALL OF THE SESSIONS - RESEARCH THIS
+                        
                         io.sockets.socket(socket.id).emit('folders',{'folderNames':folderNames});
                     }
                 }

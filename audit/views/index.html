@@ -43,7 +43,7 @@
                             
                         }
                         else{
-                        var html = "<div style=\"width:200px; height:200px\" id=\"results\"><p class=\"more\">"+element.title+"</p></div>";
+                        var html = "<div style=\"width:200px; height:200px\" class=\""+element.title+""""\" id=\"results\"><p class=\"more\">"+element.title+"</p></div>";
                         $(html).hide().appendTo('.whatevs').fadeIn(1000);  
                     }
                     },a+=2000);
@@ -53,6 +53,10 @@
             function doPost(){
                 $('.prog').show();
                 $.post('/drive', {name:'yeah'});
+            }
+            
+            function clearShit(){
+                $('#results').hide();
             }
         </script>
         <script>
