@@ -134,8 +134,8 @@ app.post('/details', function(req,res){
                     var detailsParse = JSON.parse(body);
                     if(detailsParse.mimeType == "application/vnd.google-apps.spreadsheet"){
                         var my_sheet = new GoogleSpreadsheet(detailsParse.id);
-                        //var my_sheet = new GoogleSpreadsheet('0ArDV9xnP87yFdG80VlpfcU9ObTRmSldrODdLU1c2UkE');
-                        my_sheet.setAuth('uploads@indmusicnetwork.com','ForThePeople', function(err){
+                        var my_sheet = new GoogleSpreadsheet('1sA58w2JzUOj88Y5p14A5Rew5vyLyF5Xc4LbalYQQkuU');
+                        //my_sheet.setAuth('uploads@indmusicnetwork.com','ForThePeople', function(err){
                             my_sheet.getRows( 1, function(err, row_data){
                                 res.send(row_data);
                                 console.log(row_data);
