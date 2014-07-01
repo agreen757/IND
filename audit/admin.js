@@ -123,7 +123,7 @@ app.post('/details', function(req,res){
         var parse = JSON.parse(body);
         parse.items.map(function(element){
         if(element.mimeType == "application/vnd.google-apps.folder"){
-            var childUrl = "https://www.googleapis.com/drive/v2/files/"+parse.items[0].id+"/children?maxResults=1000&q=trashed%3Dfalse&access_token="+req._passport.session.user[0].token;
+            var childUrl = "https://www.googleapis.com/drive/v2/files/"+element.id+"/children?maxResults=1000&q=trashed%3Dfalse&access_token="+req._passport.session.user[0].token;
             demand.get(childUrl, function(err,response,body){
                 if(err){console.log(err)}
                 
