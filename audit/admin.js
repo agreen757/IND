@@ -158,6 +158,7 @@ app.post('/details', function(req,res){
                                         
                                         if(counter == row_data.length){
                                             console.log(silo);
+                                            res.send(silo);
                                         }
                                     })
                                 })
