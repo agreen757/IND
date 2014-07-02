@@ -145,12 +145,14 @@ app.post('/details', function(req,res){
                                 
                                 //res.send(row_data);
                                 console.log(row_data);
+                                ;var silo = []
                                 row_data.map(function(element){
                                     var parser = new xml2js.Parser();
                                     parser.parseString(element._xml, function(err,result){
                                         if(err){console.log(err)}
                                         
                                         console.log(result);
+                                        res.send(result);
                                     })
                                 })
                                 var parser = new xml2js.Parser();
