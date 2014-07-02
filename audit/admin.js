@@ -154,7 +154,7 @@ app.post('/details', function(req,res){
                                     parser.parseString(element._xml, function(err,result){
                                         if(err){console.log(err)}
                                         console.log(result.entry);
-                                        console.log(result.entry['gsx:_cokwrk']);
+                                        console.log(result.entry['gsx:_cokwr']);
                                         silo.push(result);
                                         
                                         if(counter == row_data.length){
