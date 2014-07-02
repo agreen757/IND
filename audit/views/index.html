@@ -60,7 +60,7 @@
                console.log(item.title);
                 $.post('/details',{title:item.title},function(resp){
                     console.log(resp);
-                    var wack = "<th>"+resp[0].entry[gsx:_chk2m[0]]+"</th>";
+                    var wack = "<th>"+resp[0].entry['gsx:_chk2m[0]']+"</th>";
                     console.log(wack);
                     /*var header = "<table id=\"table2\" style=\"width:100%;color:#ffffff;background-color:#555555\"><tr><th>"+resp[0].entry."gsx:_chk2m"[0]+"</th><th>"+resp[0].entry."gsx:_ciyn3"[0]+"</th><th>"+resp[0].entry."gsx:_ckd7g"[0]+"</th><th>"+resp[0].entry."gsx:_clrrx"[0]+"</th><th>"+resp[0].entry."gsx:_cokwr"[0]+"</th><th>"+resp[0].entry."gsx:_cpzh4"[0]+"</th></th><th>"+resp[0].entry."gsx:_cre1l"[0]+"</th></th><th>"+resp[0].entry."gsx:_cssly"[0]+"</th></th><th>"+resp[0].entry."gsx:_cyevm"[0]+"</th></th><th>"+resp[0].entry."gsx:_cztg3"[0]+"</th></th><th>"+resp[0].entry."gsx:_d2mkx"[0]+"</th></th><th>"+resp[0].entry."gsx:_d180g"[0]+"</th></tr></table>";*/
                     $(header).hide().appendTo('.whatevs').fadeIn(1000);
