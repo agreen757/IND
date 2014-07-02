@@ -138,21 +138,27 @@ app.post('/details', function(req,res){
                     if(detailsParse.mimeType == "application/vnd.google-apps.spreadsheet"){
                         //var my_sheet = new GoogleSpreadsheet(detailsParse.id);
                         var my_sheet = new GoogleSpreadsheet(detailsParse.id);
-                        console.log(detailsParse.id);   
+                        //console.log(detailsParse.id);   
                         my_sheet.setAuth('adrian@indmusicnetwork.com','ImWithJessica', function(err){
                             my_sheet.getRows( 1, function(err, row_data){
                                 if(err){console.log(err)}
                                 
+                                var counter = 0;
+                                
                                 //res.send(row_data);
                                 console.log(row_data);
-                                ;var silo = []
+                                var silo = [];
                                 row_data.map(function(element){
+                                    counter++;
                                     var parser = new xml2js.Parser();
                                     parser.parseString(element._xml, function(err,result){
                                         if(err){console.log(err)}
+                                        //console.log(result);
+                                        silo.push(result);
                                         
-                                        console.log(result);
-                                        res.send(result);
+                                        if(counter == row_data.length){
+                                            console.log(silo);
+                                        }
                                     })
                                 })
                                 var parser = new xml2js.Parser();
