@@ -201,6 +201,7 @@ app.post('/drive', function(req,res){
          //****LOOP THROUGH RESULTS OF THE FOLDER LISTING
          
          var childParse = JSON.parse(body);
+         console.log(childParse);
          childParse.items.map(function(element){
              var nameGetter = 'https://www.googleapis.com/drive/v2/files/'+element.id+'?access_token='+req._passport.session.user[0].token;
              demand.get(nameGetter, function(err,response,body){
