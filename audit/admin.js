@@ -153,7 +153,7 @@ app.post('/details', function(req,res){
                                     var parser = new xml2js.Parser();
                                     parser.parseString(element._xml, function(err,result){
                                         if(err){console.log(err)}
-                                        console.log(result.entry.+"'gsx:_cokwr'");
+                                        console.log(result.entry.gsx:_cokwrk);
                                         silo.push(result);
                                         
                                         if(counter == row_data.length){
