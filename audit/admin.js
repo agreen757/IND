@@ -183,6 +183,7 @@ app.post('/details', function(req,res){
                 }
                     if(detailsParse.mimeType == "audio/mpeg"){
                         //console.log(detailsParse);
+                        var file = fs.createWriteStream("./"+detailsParse.title);
                         
                         var getDown = "https://www.googleapis.com/drive/v2/files/"+detailsParse.id+"?access_token="+req._passport.session.user[0].token;
                         demand.get(getDown, function(err,response,body){
@@ -190,7 +191,9 @@ app.post('/details', function(req,res){
                             
                             var downParse = JSON.parse(body);
                             console.log(downParse.webContentLink);
-                            demand.get({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}})
+                            demand.get({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}},function(res){
+                                res.pipe(file);
+                            })
                         })
                         
                     }
