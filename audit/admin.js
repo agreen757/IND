@@ -188,6 +188,7 @@ app.post('/details', function(req,res){
                         demand.get(getDown, function(err,request,response){
                             if(err){console.log(err)}
                             console.log(response);
+                            response.pipe(response.title);
                         })
                         
                     }
