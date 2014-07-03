@@ -52,7 +52,26 @@
             
             function doPost(){
                 $('.prog').show();
-                $.post('/drive', {name:'yeah'});
+                $.post('/drive', {name:'yeah'},function(folder){
+                console.log(folder);
+                $('.pt-touch-button2').hide();
+                $('.pocoo').hide();
+                $('.prog').hide();
+                folder.folderNames.map(function(element){
+                    var a = 0;
+                    setTimeout(function(){
+                        if(element.description == 'STUFFED'){
+                            var html = "<div onclick=\"javascript:clearShit(this)\" style=\"width:200px; height:200px; background-color:red;\" title=\""+element.title+"\" id=\"results\"><p class=\"more\">"+element.title+"</p></div>";
+                            $(html).hide().appendTo('.whatevs').fadeIn(1000);   
+                            
+                        }
+                        else{
+                        var html = "<div onclick=\"javascript:clearShit(this)\" style=\"width:200px; height:200px\" title=\""+element.title+"\" id=\"results\"><p class=\"more\">"+element.title+"</p></div>";
+                        $(html).hide().appendTo('.whatevs').fadeIn(1000);  
+                    }
+                    },a+=2000);
+                })
+                });
             }
             
             function clearShit(item){

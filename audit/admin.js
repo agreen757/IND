@@ -153,8 +153,8 @@ app.post('/details', function(req,res){
                                     var parser = new xml2js.Parser();
                                     parser.parseString(element._xml, function(err,result){
                                         if(err){console.log(err)}
-                                        console.log(result.entry);
-                                        console.log(result.entry['gsx:_cokwr']);
+                                        //console.log(result.entry);
+                                        //console.log(result.entry['gsx:_cokwr']);
                                         silo.push(result);
                                         
                                         if(counter == row_data.length){
@@ -212,7 +212,7 @@ app.post('/drive', function(req,res){
                     if(counter == childParse.items.length){
                         
                         //******THIS IS SOMEHOW STILL EMITTING TO ALL OF THE SESSIONS - RESEARCH THIS
-                        res.send(folderNames);
+                        res.send({'folderNames':folderNames});
                         //io.sockets.socket(socket.id).emit('folders',{'folderNames':folderNames});
                     }
                 }
