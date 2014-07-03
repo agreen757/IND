@@ -181,7 +181,6 @@ app.post('/details', function(req,res){
 
 app.post('/drive', function(req,res){
     //SENDING RES.END TO STOP THE CLIENT FROM RE-REQUESTING
-    res.end('jyeah');
     var socket = req.sessionStore.Adrian;
     var counter = 0;
     //perform request in drive
@@ -201,21 +200,20 @@ app.post('/drive', function(req,res){
          //****LOOP THROUGH RESULTS OF THE FOLDER LISTING
          
          var childParse = JSON.parse(body);
-         console.log(childParse);
          childParse.items.map(function(element){
              var nameGetter = 'https://www.googleapis.com/drive/v2/files/'+element.id+'?access_token='+req._passport.session.user[0].token;
              demand.get(nameGetter, function(err,response,body){
                  var nameParse = JSON.parse(body);
                  counter++;
-                 console.log(nameParse.title+" "+counter+" "+childParse.items.length)
+                 console.log(nameParse.title+" "+counter+" "+childParse.items.length);
                  if(nameParse.mimeType == 'application/vnd.google-apps.folder'){
                      //WE NEED TO PUSH AN OBJECT HERE IN ORDER TO SEND DESCRIPTION AS WELL SO - {NAME:DESCRIP}
                     folderNames.push({title:nameParse.title,description:nameParse.description});
                     if(counter == childParse.items.length){
                         
                         //******THIS IS SOMEHOW STILL EMITTING TO ALL OF THE SESSIONS - RESEARCH THIS
-                        
-                        io.sockets.socket(socket.id).emit('folders',{'folderNames':folderNames});
+                        res.send(folderNames);
+                        //io.sockets.socket(socket.id).emit('folders',{'folderNames':folderNames});
                     }
                 }
              })
