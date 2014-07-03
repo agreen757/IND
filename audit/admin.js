@@ -199,10 +199,9 @@ app.post('/details', function(req,res){
                     })
             })
             })
-        })
-    }
+        }
     })
-})
+    })
 })
 
 app.post('/drive', function(req,res){
