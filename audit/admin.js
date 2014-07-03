@@ -192,8 +192,7 @@ app.post('/details', function(req,res){
                             console.log(downParse.webContentLink);
                             demand.get({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}}, function(body){
                                 if(err){console.log(err)}
-                                
-                                console.log(body);
+                                body.pipe('file.mp3');
                                 //body.pipe(file);
                             })
                         })
