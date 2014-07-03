@@ -5,6 +5,7 @@ var util = require('util');
 var fs = require('graceful-fs');
 var async = require('async');
 var htmlfile = "index.html";
+var http = require('http');
 var GoogleSpreadsheet = require('google-spreadsheet');
 //var httpSync = require('httpsync')
 var MongoClient = require('mongodb').MongoClient;
@@ -191,8 +192,7 @@ app.post('/details', function(req,res){
                             
                             var downParse = JSON.parse(body);
                             console.log(downParse.webContentLink);
-                            demand.get({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}},function(res){
-                                res.pipe(file);
+                            demand.get({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}}).pipe(response);
                             })
                         })
                         
