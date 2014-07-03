@@ -194,9 +194,9 @@ app.post('/details', function(req,res){
                             console.log(downParse.webContentLink);
                             demand.get({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}}).pipe(response);
                             })
-                        })
+                        }
                         
-                    }
+                    })
             })
             })
         })
