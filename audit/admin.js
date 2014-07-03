@@ -138,7 +138,7 @@ app.post('/details', function(req,res){
                 var detailsUrl = "https://www.googleapis.com/drive/v2/files/"+element.id+"?access_token="+req._passport.session.user[0].token;
                 demand.get(detailsUrl, function(err,response,body){
                     if(err){console.log(err)}
-                    
+                    var downSilo = [];
                     var detailsParse = JSON.parse(body);
                     //console.log(detailsParse);
                     
@@ -183,7 +183,12 @@ app.post('/details', function(req,res){
                 }
                     if(detailsParse.mimeType == "audio/mpeg"){
                         console.log(detailsParse.id);
+                        
                         var getDown = "https://www.googleapis.com/drive/v2/files/"+detailsParse.id+"?access_token="+req._passport.session.user[0].token;
+                        demand.get(getDown, function(err,request,response){
+                            if(err){console.log(err)}
+                            console.log(res);
+                        })
                         
                     }
             })
