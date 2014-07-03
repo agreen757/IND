@@ -129,12 +129,18 @@ app.post('/details', function(req,res){
                 if(err){console.log(err)}
                 
                 var childParse = JSON.parse(body);
-                console.log(childParse);
+                //console.log(childParse);
+                
+                //*****FINDS AND PARSES THE CHILDREN IN THE FOLDER
+                
                 var detailsUrl = "https://www.googleapis.com/drive/v2/files/"+childParse.items[0].id+"?access_token="+req._passport.session.user[0].token;
                 demand.get(detailsUrl, function(err,response,body){
                     if(err){console.log(err)}
                     
                     var detailsParse = JSON.parse(body);
+                    
+                    //*****IF ITS A SPREADSHEET, PARSE THE XML WITHIN THE METADATA TO GET FULL DETAILS
+                    
                     if(detailsParse.mimeType == "application/vnd.google-apps.spreadsheet"){
                         //var my_sheet = new GoogleSpreadsheet(detailsParse.id);
                         var my_sheet = new GoogleSpreadsheet(detailsParse.id);
@@ -172,6 +178,11 @@ app.post('/details', function(req,res){
                             })
                     })
                 }
+                    if(detailsParse.mimeType == "audio/mpeg"){
+                        console.log(detailsParse.id);
+                        var getDown = "https://www.googleapis.com/drive/v2/files/"+detailsParse.id+"?access_token="+req._passport.session.user[0].token;
+                        
+                    }
             })
         })
     }
