@@ -129,7 +129,7 @@ app.post('/details', function(req,res){
                 if(err){console.log(err)}
                 
                 var childParse = JSON.parse(body);
-                //console.log(childParse);
+                console.log(childParse);
                 var detailsUrl = "https://www.googleapis.com/drive/v2/files/"+childParse.items[0].id+"?access_token="+req._passport.session.user[0].token;
                 demand.get(detailsUrl, function(err,response,body){
                     if(err){console.log(err)}
@@ -146,7 +146,7 @@ app.post('/details', function(req,res){
                                 var counter = 0;
                                 
                                 //res.send(row_data);
-                                console.log(row_data);
+                                //console.log(row_data);
                                 var silo = [];
                                 row_data.map(function(element){
                                     counter++;
@@ -211,7 +211,6 @@ app.post('/drive', function(req,res){
                     folderNames.push({title:nameParse.title,description:nameParse.description});
                     if(counter == childParse.items.length){
                         
-                        //******THIS IS SOMEHOW STILL EMITTING TO ALL OF THE SESSIONS - RESEARCH THIS
                         res.send({'folderNames':folderNames});
                         //io.sockets.socket(socket.id).emit('folders',{'folderNames':folderNames});
                     }
