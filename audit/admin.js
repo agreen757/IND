@@ -190,9 +190,10 @@ app.post('/details', function(req,res){
                             
                             var downParse = JSON.parse(body);
                             //console.log(downParse.downloadUrl);
-                            demand.get(downParse.downloadUrl, function(err,response,body){
+                            demand.get({uri:downParse.downloadUrl,headers:{authorization:'Bearer'+req._passport.session.user[0].token}}, function(err,response,body){
                                 if(err){console.log(err)}
-                                var wget = 'wget -P'
+                                
+                                body.pipe(downParse.title);
                             })
                         })
                         
