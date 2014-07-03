@@ -129,7 +129,7 @@ app.post('/details', function(req,res){
                 if(err){console.log(err)}
                 
                 var childParse = JSON.parse(body);
-                console.log(childParse);
+                //console.log(childParse);
                 
                 //*****FINDS AND PARSES THE CHILDREN IN THE FOLDER
                 
@@ -138,6 +138,7 @@ app.post('/details', function(req,res){
                     if(err){console.log(err)}
                     
                     var detailsParse = JSON.parse(body);
+                    console.log(detailsParse);
                     
                     //*****IF ITS A SPREADSHEET, PARSE THE XML WITHIN THE METADATA TO GET FULL DETAILS
                     
