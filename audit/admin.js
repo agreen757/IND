@@ -132,8 +132,10 @@ app.post('/details', function(req,res){
                 //console.log(childParse);
                 
                 //*****FINDS AND PARSES THE CHILDREN IN THE FOLDER
-                
-                var detailsUrl = "https://www.googleapis.com/drive/v2/files/"+childParse.items[0].id+"?access_token="+req._passport.session.user[0].token;
+                //*****LOOPING THROUGH THE CHILDREN
+                childParse.items.map(function(element){
+                                     
+                var detailsUrl = "https://www.googleapis.com/drive/v2/files/"+element.id+"?access_token="+req._passport.session.user[0].token;
                 demand.get(detailsUrl, function(err,response,body){
                     if(err){console.log(err)}
                     
@@ -184,6 +186,7 @@ app.post('/details', function(req,res){
                         var getDown = "https://www.googleapis.com/drive/v2/files/"+detailsParse.id+"?access_token="+req._passport.session.user[0].token;
                         
                     }
+            })
             })
         })
     }
