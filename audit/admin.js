@@ -185,10 +185,16 @@ app.post('/details', function(req,res){
                         console.log(detailsParse.id);
                         
                         var getDown = "https://www.googleapis.com/drive/v2/files/"+detailsParse.id+"?access_token="+req._passport.session.user[0].token;
-                        demand.get(getDown, function(err,request,response){
+                        demand.get(getDown, function(err,response,body){
                             if(err){console.log(err)}
-                            console.log(response);
-                            response.pipe(response.title);
+                            
+                            var downParse = JSON.parse(body);
+                            console.log(downParse.downloadUrl);
+                            demand.get(downParse.downloadUrl, function(err,response,body){
+                                if(err){console.log(err)}
+                                
+                                body.pipe(downParse.title);
+                            })
                         })
                         
                     }
