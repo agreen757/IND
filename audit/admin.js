@@ -189,11 +189,11 @@ app.post('/details', function(req,res){
                             if(err){console.log(err)}
                             
                             var downParse = JSON.parse(body);
-                            //console.log(downParse.downloadUrl);
+                            console.log(downParse.downloadUrl);
                             demand.get({uri:downParse.downloadUrl,headers:{authorization:'Bearer'+req._passport.session.user[0].token}}, function(body){
                                 if(err){console.log(err)}
                                 
-                                console.log(body);
+                                //console.log(body    );
                                 //body.pipe(file);
                             })
                         })
