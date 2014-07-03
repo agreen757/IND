@@ -129,7 +129,7 @@ app.post('/details', function(req,res){
                 if(err){console.log(err)}
                 
                 var childParse = JSON.parse(body);
-                //console.log(childParse);
+                console.log(childParse);
                 
                 //*****FINDS AND PARSES THE CHILDREN IN THE FOLDER
                 
@@ -179,7 +179,7 @@ app.post('/details', function(req,res){
                     })
                 }
                     if(detailsParse.mimeType == "audio/mpeg"){
-                        console.log(detailsParse.id);
+                        //console.log(detailsParse.id);
                         var getDown = "https://www.googleapis.com/drive/v2/files/"+detailsParse.id+"?access_token="+req._passport.session.user[0].token;
                         
                     }
