@@ -192,7 +192,7 @@ app.post('/details', function(req,res){
                             
                             var downParse = JSON.parse(body);
                             console.log(downParse.webContentLink);
-                            var r = demand({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}}).pipe(file));
+                            var r = demand({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}}).pipe(file);
                             r.on('error', function(error){console.log(error)});
                             r.on('finish', function(){
                                 file.close();
