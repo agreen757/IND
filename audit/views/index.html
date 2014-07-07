@@ -52,8 +52,13 @@
             })
             
             socket.on('downIds', function(id){
-                console.log(id);
+                //console.log(id);
+                fileIds.push(id);
             })
+            
+            function suckToServ(){
+                console.log(fileIds);
+            }
             
             function doPost(){
                 $('.prog').show();
