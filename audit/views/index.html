@@ -60,6 +60,7 @@
                 //console.log(fileIds);
                 $.post('/moveToServ', {id:fileIds}, function(res){
                     console.log(res);
+                    var doneUrl = "<center><strong>This item has been queued for upload to YouTube</strong></center>"
                 })
             }
             
