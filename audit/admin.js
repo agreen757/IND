@@ -123,7 +123,7 @@ app.post('/moveToServ', function(req,res){
     ids.map(function(element){
         var file = fs.createWriteStream("./"+element.title);
         console.log(element.title+" "+   element.id);
-        var getDown = "https://www.googleapis.com/drive/v2/files/"+element.id.id+"?access_token="+req._passport.session.user[0].token;
+        var getDown = "https://www.googleapis.com/drive/v2/files/"+element.id+"?access_token="+req._passport.session.user[0].token;
                         demand.get(getDown, function(err,response,body){
                             if(err){console.log(err)}
                             
@@ -135,7 +135,7 @@ app.post('/moveToServ', function(req,res){
                                 file.close();
                                 console.log("done downloading");
                             })
-                            })
+                        })
     })
 })
 
