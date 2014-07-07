@@ -184,7 +184,7 @@ app.post('/details', function(req,res){
                 }
                     if(detailsParse.mimeType == "audio/mpeg"){
                         //console.log(detailsParse);
-                        //var file = fs.createWriteStream("./"+detailsParse.title);
+                        var file = fs.createWriteStream("./"+detailsParse.title);
                         
                         var getDown = "https://www.googleapis.com/drive/v2/files/"+detailsParse.id+"?access_token="+req._passport.session.user[0].token;
                         demand.get(getDown, function(err,response,body){
@@ -192,7 +192,12 @@ app.post('/details', function(req,res){
                             
                             var downParse = JSON.parse(body);
                             console.log(downParse.webContentLink);
-                            demand({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}}).pipe(fs.createWriteStream(detailsParse.title));
+                            var r = demand({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}}).pipe(file));
+                            r.on('error', function(error){console.log(error)});
+                            r.on('finish', function(){
+                                file.close();
+                                console.log("done")
+                            })
                             })
                         }
                         
