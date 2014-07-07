@@ -116,6 +116,25 @@ app.post('/deactivate', function(req, res){
 
 app.post('/moveToServ', function(req,res){
     console.log(req.body);
+    
+    //****DOWNLOAD FILES FROM GOOGLE DRIVE TO THE SERVER AND GENERATE NEEDED XML SHIT
+    
+    var ids = req.body.id;
+    ids.map(function(element){
+    var getDown = "https://www.googleapis.com/drive/v2/files/"+element+"?access_token="+req._passport.session.user[0].token;
+                        demand.get(getDown, function(err,response,body){
+                            if(err){console.log(err)}
+                            
+                            var downParse = JSON.parse(body);
+                            console.log(downParse.webContentLink);
+                            var r = demand({uri:downParse.downloadUrl,headers:{authorization:'Bearer '+req._passport.session.user[0].token}}).pipe(file);
+                            r.on('error', function(error){console.log(error)});
+                            r.on('finish', function(){
+                                file.close();
+                                console.log("done downloading");
+                            })
+                            })
+    })
 })
 
 app.post('/details', function(req,res){
