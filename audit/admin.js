@@ -122,7 +122,7 @@ app.post('/moveToServ', function(req,res){
     var ids = req.body.id;
     ids.map(function(element){
         var file = fs.createWriteStream("./"+element.id.title);
-        console.log(element.id.title+" "element.id.id);
+        console.log(element.id.title+" "+element.id.id);
         var getDown = "https://www.googleapis.com/drive/v2/files/"+element.id.id+"?access_token="+req._passport.session.user[0].token;
                         demand.get(getDown, function(err,response,body){
                             if(err){console.log(err)}
