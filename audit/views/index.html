@@ -59,7 +59,7 @@
             function suckToServ(){
                 //console.log(fileIds);
                 $.post('/moveToServ', {id:fileIds}, function(res){
-                    console.log("downloaded");
+                    console.log(res);
                 })
             }
             

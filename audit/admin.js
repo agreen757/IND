@@ -120,6 +120,7 @@ app.post('/moveToServ', function(req,res){
     //****DOWNLOAD FILES FROM GOOGLE DRIVE TO THE SERVER AND GENERATE NEEDED XML SHIT
 
     var ids = req.body.id;
+    var counter = 0;
     ids.map(function(element){
         var file = fs.createWriteStream("./"+element.title);
         console.log(element.title+" "+   element.id);
@@ -134,6 +135,10 @@ app.post('/moveToServ', function(req,res){
                             r.on('finish', function(){
                                 file.close();
                                 console.log("done downloading");
+                                counter++;
+                                if(counter == ids.length){
+                                    res.send("downloaded");
+                                }
                             })
                         })
     })
