@@ -193,10 +193,10 @@ app.post('/details', function(req,res){
                             var downParse = JSON.parse(body);
                             console.log(downParse.webContentLink);
                             
-                            demand.get(downParse.webContentLink+"access_token="+req._passport.session.user[0].token, function(err,response,body){
+                            demand.get({url:downParse.webContentLink,headers:{authorization:'Bearer '+req._passport.session.user[0].token}}, function(err,response,body){
                                 if(err){console.log(err)}
                                 
-                                console.log(body);
+                                console.log(response);
                             })
                             
                             
