@@ -114,6 +114,10 @@ app.post('/deactivate', function(req, res){
     //insert the deactivator stuff here.
 })
 
+app.post('/moveToServ', function(req,res){
+    console.log(req.body);
+})
+
 app.post('/details', function(req,res){
     var socket = req.sessionStore.Adrian;
     console.log("got it...");
