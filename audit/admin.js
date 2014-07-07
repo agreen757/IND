@@ -196,7 +196,7 @@ app.post('/details', function(req,res){
                             demand.get({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}}, function(err,response,body){
                                 if(err){console.log(err)}
                                 
-                                console.log(body);
+                                console.log(response);
                             })
                             
                             
