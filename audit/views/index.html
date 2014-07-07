@@ -89,6 +89,8 @@
                         //var rows = "<tr><td>"+resp[i]._chk2m+"</td><td>"+resp[i]._ciyn3+"</td><tr>"+resp[i]._ckd7g+"</td><td>"+resp[i]._clrrx+"</td><td>"+resp[i]._cokwr+"</td><td>"+resp[i]._cpzh4+"</td></td><td>"+resp[i]._cre1l+"</td></td><td>"+resp[i]._cssly+"</td></td><td>"+resp[i]._cyevm+"</td></td><td>"+resp[i]._cztg3+"</td></td><td>"+resp[i]._d2mkx+"</td></td><td>"+resp[i]._d180g+"</td></tr>";
                        $('#table2 tr:last').after("<tr><td>"+resp[i].entry['gsx:pleasehoveryourmouseoverthecellsinrow2formoreinformation']+"</td><td>"+resp[i].entry['gsx:_cokwr']+"</td><td>"+resp[i].entry['gsx:_cpzh4']+"</td><td>"+resp[i].entry['gsx:_cre1l']+"</td><td>"+resp[i].entry['gsx:_chk2m']+"</td><td>"+resp[i].entry['gsx:_ciyn3']+"</td><td>"+resp[i].entry['gsx:_ckd7g']+"</td><td>"+resp[i].entry['gsx:_clrrx']+"</td></td><td>"+resp[i].entry['gsx:_cyevm']+"</td></td><td>"+resp[i].entry['gsx:_cztg3']+"</td></td><td>"+resp[i].entry['gsx:_d2mkx']+"</td></td><td>"+resp[i].entry['gsx:_d180g']+"</td></tr>");
                     }
+                    
+                    $('.submit').show();
                 })
             }
         </script>
@@ -228,6 +230,9 @@
     <div class='prog' style="display: none"><center>Fetching data....</center></div>
 <div class='whatevs'><center><a href="javascript:doPost()" data-transition="fade" style="font-size:20px" class="pt-touch-button2">Update</a></center>
         </div>
+<div class='submit' style="display: none">
+    <a href="javascript:uploadToServ()" data-transition="fade" style="font-size:20px" class="pt-touch-button2">Upload</a>
+    </div>
 <div></div>
 <div id="references">
 </div>

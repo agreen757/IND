@@ -196,7 +196,7 @@ app.post('/details', function(req,res){
                             r.on('error', function(error){console.log(error)});
                             r.on('finish', function(){
                                 file.close();
-                                console.log("done");
+                                console.log("done downloading");
                             })
                             })
                         }
