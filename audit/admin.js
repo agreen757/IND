@@ -196,11 +196,11 @@ app.post('/details', function(req,res){
                             demand.get(downParse.webContentLink, function(err,response,body){
                                 if(err){console.log(err)}
                                 
-                                console.log(response);
+                                console.log(body);
                             })
                             
                             
-                            /*var r = demand({uri:downParse.webContentLink,headers:{authorization:'Bearer'+req._passport.session.user[0].token}}).pipe(file);
+                            /*var r = demand({uri:downParse.webContentLink,headers:{authorization:'Bearer '+req._passport.session.user[0].token}}).pipe(file);
                             r.on('error', function(error){console.log(error)});
                             r.on('finish', function(){
                                 file.close();
