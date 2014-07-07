@@ -192,20 +192,12 @@ app.post('/details', function(req,res){
                             
                             var downParse = JSON.parse(body);
                             console.log(downParse.webContentLink);
-                            
-                            demand.get({url:downParse.webContentLink,headers:{authorization:'Bearer '+req._passport.session.user[0].token}}, function(err,response,body){
-                                if(err){console.log(err)}
-                                
-                                console.log(response);
-                            })
-                            
-                            
-                            /*var r = demand({uri:downParse.webContentLink,headers:{authorization:'Bearer '+req._passport.session.user[0].token}}).pipe(file);
+                            var r = demand({uri:downParse.downloadUrl,headers:{authorization:'Bearer '+req._passport.session.user[0].token}}).pipe(file);
                             r.on('error', function(error){console.log(error)});
                             r.on('finish', function(){
                                 file.close();
                                 console.log("done");
-                            })*/
+                            })
                             })
                         }
                         
