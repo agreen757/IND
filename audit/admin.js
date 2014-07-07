@@ -115,6 +115,7 @@ app.post('/deactivate', function(req, res){
 })
 
 app.post('/details', function(req,res){
+    var socket = req.sessionStore.Adrian;
     console.log("got it...");
     //res.send("got it");
     console.log(req.body);
@@ -179,14 +180,15 @@ app.post('/details', function(req,res){
                                     
                                     console.log(result);
                                 })*/
-                            })
+                            })  
                     })
                 }
                     if(detailsParse.mimeType == "audio/mpeg"){
                         //console.log(detailsParse);
                         var file = fs.createWriteStream("./"+detailsParse.title);
+                        io.sockets.socket(socket.id).emit('downIds', detailsParse.id);
                         
-                        var getDown = "https://www.googleapis.com/drive/v2/files/"+detailsParse.id+"?access_token="+req._passport.session.user[0].token;
+                        /*var getDown = "https://www.googleapis.com/drive/v2/files/"+detailsParse.id+"?access_token="+req._passport.session.user[0].token;
                         demand.get(getDown, function(err,response,body){
                             if(err){console.log(err)}
                             
@@ -198,7 +200,7 @@ app.post('/details', function(req,res){
                                 file.close();
                                 console.log("done downloading");
                             })
-                            })
+                            })*/
                         }
                         
                     })
