@@ -58,9 +58,9 @@
             
             function suckToServ(fileIds){
                 //console.log(fileIds);
-                $.post('/moveToServ'), {id:fileIds}, function(res){
+                $.post('/moveToServ', {id:fileIds}, function(res){
                     console.log("downloaded");
-                }
+                })
             }
             
             function doPost(){
