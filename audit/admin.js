@@ -118,10 +118,11 @@ app.post('/moveToServ', function(req,res){
     console.log(req.body);
     
     //****DOWNLOAD FILES FROM GOOGLE DRIVE TO THE SERVER AND GENERATE NEEDED XML SHIT
-    var file = fs.createWriteStream("./"+detailsParse.title);
+
     var ids = req.body.id;
     ids.map(function(element){
-    var getDown = "https://www.googleapis.com/drive/v2/files/"+element+"?access_token="+req._passport.session.user[0].token;
+        var file = fs.createWriteStream("./"+element.id.title);
+        var getDown = "https://www.googleapis.com/drive/v2/files/"+element.id.id+"?access_token="+req._passport.session.user[0].token;
                         demand.get(getDown, function(err,response,body){
                             if(err){console.log(err)}
                             
