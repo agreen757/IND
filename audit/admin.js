@@ -3,6 +3,8 @@
 var express = require('express');
 var util = require('util');
 var fs = require('graceful-fs');
+var ssh2 = require('ssh2');
+var conn = new ssh2();
 var async = require('async');
 var htmlfile = "index.html";
 var http = require('http');
@@ -123,13 +125,13 @@ app.post('/moveToServ', function(req,res){
     var counter = 0;
     ids.map(function(element){
         var file = fs.createWriteStream("./"+element.title);
-        console.log(element.title+" "+   element.id);
+        //console.log(element.title+" "+   element.id);
         var getDown = "https://www.googleapis.com/drive/v2/files/"+element.id+"?access_token="+req._passport.session.user[0].token;
                         demand.get(getDown, function(err,response,body){
                             if(err){console.log(err)}
                             
                             var downParse = JSON.parse(body);
-                            console.log(downParse);
+                            //console.log(downParse);
                             var r = demand({uri:downParse.downloadUrl,headers:{authorization:'Bearer '+req._passport.session.user[0].token}}).pipe(file);
                             r.on('error', function(error){console.log(error)});
                             r.on('finish', function(){
@@ -138,6 +140,41 @@ app.post('/moveToServ', function(req,res){
                                 counter++;
                                 if(counter == ids.length){
                                     res.send("downloaded");
+                                    
+                                    //NOW THAT THE FILE HAS BEEN UPLOADED TO THE SERV WE ARE GOING TO UPLOAD TO YT DROPBOX
+                                    //http://newspaint.wordpress.com/2013/03/26/how-to-upload-a-file-over-ssh-using-node-js/
+                                    
+                                    ids.map(function(element){
+                                        conn.on('connect', function(){
+                                            console.log( "- connected" );
+                                        });
+                                        conn.on('ready', function(){
+                                            console.log("- ready");
+                                            
+                                            conn.sftp(function(err,sftp){
+                                                if(err){console.log(err)}
+                                                
+                                                console.log("- SFTP started");
+                                                
+                                                //START FILE UPLOAD
+                                                var readStream = fs.createReadStream(element.title);
+                                                var writeStream = sftp.createWriteStream("/INDMUSIC/"+element.title);
+                                                writeStream.on('close', function(){
+                                                    console.log("transfered - "element.title);
+                                                    sftp.end();
+                                                })
+                                                readStream.pipe(writeStream);
+                                            })
+                                        })
+                                        
+                                        conn.connect({
+                                            "host": "partnerupload.google.com",
+                                            "port": 19321,
+                                            "username": "yt-indmusic",
+                                            "privateKey": "~/.ssh/id_rsa"
+                                        })
+                                        
+                                    })
                                 }
                             })
                         })
