@@ -160,7 +160,7 @@ app.post('/moveToServ', function(req,res){
                                                 var readStream = fs.createReadStream(element.title);
                                                 var writeStream = sftp.createWriteStream("/INDMUSIC/"+element.title);
                                                 writeStream.on('close', function(){
-                                                    console.log("transfered - "element.title);
+                                                    console.log("transfered - "+element.title);
                                                     sftp.end();
                                                 })
                                                 readStream.pipe(writeStream);
