@@ -171,7 +171,7 @@ app.post('/moveToServ', function(req,res){
                                             "host": "partnerupload.google.com",
                                             "port": 19321,
                                             "username": "yt-indmusic",
-                                            "privateKey": "~/.ssh/id_rsa"
+                                            "privateKey": "/home/agreen/.ssh/id_rsa"
                                         })
                                         
                                     })
