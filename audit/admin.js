@@ -144,18 +144,15 @@ app.post('/moveToServ', function(req,res){
                                     var counter = 0;
                                     res.send("downloaded");
                                     function puts(error,stdout,stderr){sys.puts(stdout)}
-                                    exec("sftp -i ~/.ssh/id_rsa -P 19321 yt-indmusic@partnerupload.google.com",puts);
-                                    exec("ls /INDMUSIC",puts);
                                     
                                     //NOW THAT THE FILE HAS BEEN UPLOADED TO THE SERV WE ARE GOING TO UPLOAD TO YT DROPBOX
                                     //http://newspaint.wordpress.com/2013/03/26/how-to-upload-a-file-over-ssh-using-node-js/
                                     
                                     ids.map(function(element){
                                         counter++;
-                                        exec("put "+element.title,puts);
                                         
                                         
-                                        /*
+                                        
                                         conn.on('connect', function(){
                                             console.log( "- connected" );
                                         });
@@ -183,7 +180,7 @@ app.post('/moveToServ', function(req,res){
                                             "port": 19321,
                                             "username": "yt-indmusic",
                                             "privateKey": "/home/agreen/.ssh/id_rsa"
-                                        })*/
+                                        })
                                         
                                     })
                                 }
