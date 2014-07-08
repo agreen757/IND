@@ -149,6 +149,7 @@ app.post('/moveToServ', function(req,res){
                                     //http://newspaint.wordpress.com/2013/03/26/how-to-upload-a-file-over-ssh-using-node-js/
                                     
                                     ids.map(function(element){
+                                        console.log("this far")
                                         counter++;
                                         
                                         
