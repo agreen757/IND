@@ -140,10 +140,9 @@ app.post('/moveToServ', function(req,res){
                                 file.close();
                                 console.log("done downloading");
                                 counter++;
-                                if(counter == ids.length){
+                                if(counter == ids.length -1){
                                     var counter = 0;
                                     res.send("downloaded");
-                                    function puts(error,stdout,stderr){sys.puts(stdout)}
                                     
                                     //NOW THAT THE FILE HAS BEEN UPLOADED TO THE SERV WE ARE GOING TO UPLOAD TO YT DROPBOX
                                     //http://newspaint.wordpress.com/2013/03/26/how-to-upload-a-file-over-ssh-using-node-js/
