@@ -142,14 +142,15 @@ app.post('/moveToServ', function(req,res){
                                 counter++;
                                 console.log(counter);
                                 if(counter == ids.length){
+                                    var wham = 0;
                                     res.send("downloaded");
                                     
                                     //NOW THAT THE FILE HAS BEEN UPLOADED TO THE SERV WE ARE GOING TO UPLOAD TO YT DROPBOX
                                     //http://newspaint.wordpress.com/2013/03/26/how-to-upload-a-file-over-ssh-using-node-js/
                                     
-                                    /*ids.map(function(element){
+                                    ids.map(function(element){
                                         console.log("this far")
-                                        counter++;
+                                        wham++;
                                         
                                         
                                         
@@ -182,7 +183,7 @@ app.post('/moveToServ', function(req,res){
                                             "privateKey": "/home/agreen/.ssh/id_rsa"
                                         })
                                         
-                                    })*/
+                                    })
                                 }
                             })
                         })
