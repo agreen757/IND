@@ -140,7 +140,8 @@ app.post('/moveToServ', function(req,res){
                                 file.close();
                                 console.log("done downloading");
                                 counter++;
-                                if(counter == ids.length -1){
+                                console.log(counter);
+                                if(counter == ids.length){
                                     var counter = 0;
                                     res.send("downloaded");
                                     
