@@ -180,7 +180,7 @@ app.post('/moveToServ', function(req,res){
                                             "host": "partnerupload.google.com",
                                             "port": 19321,
                                             "username": "yt-indmusic",
-                                            "privateKey": "/home/agreen/.ssh/id_rsa"
+                                            privateKey: fs.readFileSync("/home/agreen/.ssh/id_rsa")
                                         })
                                         
                                     })
