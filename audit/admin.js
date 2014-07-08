@@ -142,7 +142,6 @@ app.post('/moveToServ', function(req,res){
                                 counter++;
                                 console.log(counter);
                                 if(counter == ids.length){
-                                    var counter = 0;
                                     res.send("downloaded");
                                     
                                     //NOW THAT THE FILE HAS BEEN UPLOADED TO THE SERV WE ARE GOING TO UPLOAD TO YT DROPBOX
