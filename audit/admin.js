@@ -3,6 +3,7 @@
 var express = require('express');
 var util = require('util');
 var fs = require('graceful-fs');
+var xml = require('./node_modules/xml')
 var sys = require('sys');
 var exec = require('child_process').exec;
 var ssh2 = require('ssh2');
@@ -121,7 +122,12 @@ app.post('/deactivate', function(req, res){
 app.post('/moveToServ', function(req,res){
     console.log(req.xml);
     
-    //****DOWNLOAD FILES FROM GOOGLE DRIVE TO THE SERVER AND GENERATE NEEDED XML SHIT
+    //****PARSE XML
+    var r = new xml(req.xml);
+    r.about();
+    
+    
+    //****UPLOAD TO SERVER AND YT
 
     var ids = req.body.id;
     console.log(ids);
