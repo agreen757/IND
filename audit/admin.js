@@ -123,8 +123,7 @@ app.post('/moveToServ', function(req,res){
     console.log(req.body.xml);
     
     //****PARSE XML
-    var xml = req.xml;
-    var r = new xml(xml);
+    var r = new xml(req.body.xml);
     r.about();
     
     
