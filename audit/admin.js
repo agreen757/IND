@@ -176,9 +176,9 @@ app.post('/moveToServ', function(req,res){
                                             })
                                         })
                                         
-                                        conn.on('end', function(){
+                                        /*conn.on('end', function(){
                                             console.log("closing sftp connection");
-                                        })
+                                        })*/
                                         
                                         conn.connect({
                                             "host": "partnerupload.google.com",
