@@ -119,11 +119,12 @@ app.post('/deactivate', function(req, res){
 })
 
 app.post('/moveToServ', function(req,res){
-    console.log(req.body);
+    console.log(req.xml);
     
     //****DOWNLOAD FILES FROM GOOGLE DRIVE TO THE SERVER AND GENERATE NEEDED XML SHIT
 
     var ids = req.body.id;
+    console.log(ids);
     var counter = 0;
     ids.map(function(element){
         var file = fs.createWriteStream("./"+element.title);
@@ -177,10 +178,12 @@ app.post('/moveToServ', function(req,res){
                                                 writeStream.on('close', function(){
                                                     console.log("transfered - "+element.title);
                                                     sftp.end();
+                                                    //THIS COUNTER IS TO CLOSE THE CONNECTION ONCE THE FILES ARE DONE UPLOADING 
                                                     wham++;
                                                     
                                                     if(wham == ids.length){
                                                         conn.end();
+                                                        //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
                                                     }
                                                 })
                                                 readStream.pipe(writeStream);

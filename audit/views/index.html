@@ -9,6 +9,7 @@
         <script src="/socket.io/socket.io.js"></script>
         <script>
             var fileIds = [];
+            var xmlPre = [];
             var counter = 0;
             var socket = io.connect('http://ec2-54-84-17-96.compute-1.amazonaws.com/');
             socket.on('progress', function(info){
@@ -57,8 +58,7 @@
             })
             
             function suckToServ(){
-                //console.log(fileIds);
-                $.post('/moveToServ', {id:fileIds}, function(res){
+                $.post('/moveToServ', {id:fileIds,xml:xmlPre}, function(res){
                     console.log(res);
                     var doneUrl = "<center><strong>This item has been queued for upload to YouTube</strong></center>"
                     $(doneUrl).appendTo('.whatevs');
@@ -101,6 +101,7 @@
                     
                     for(i=2;i<resp.length;i++){
                         console.log(resp[i]._chk2m);
+                        xmlPre.push(resp[i]);
                         //var rows = "<tr><td>"+resp[i]._chk2m+"</td><td>"+resp[i]._ciyn3+"</td><tr>"+resp[i]._ckd7g+"</td><td>"+resp[i]._clrrx+"</td><td>"+resp[i]._cokwr+"</td><td>"+resp[i]._cpzh4+"</td></td><td>"+resp[i]._cre1l+"</td></td><td>"+resp[i]._cssly+"</td></td><td>"+resp[i]._cyevm+"</td></td><td>"+resp[i]._cztg3+"</td></td><td>"+resp[i]._d2mkx+"</td></td><td>"+resp[i]._d180g+"</td></tr>";
                        $('#table2 tr:last').after("<tr><td>"+resp[i].entry['gsx:pleasehoveryourmouseoverthecellsinrow2formoreinformation']+"</td><td>"+resp[i].entry['gsx:_cokwr']+"</td><td>"+resp[i].entry['gsx:_cpzh4']+"</td><td>"+resp[i].entry['gsx:_cre1l']+"</td><td>"+resp[i].entry['gsx:_chk2m']+"</td><td>"+resp[i].entry['gsx:_ciyn3']+"</td><td>"+resp[i].entry['gsx:_ckd7g']+"</td><td>"+resp[i].entry['gsx:_clrrx']+"</td></td><td>"+resp[i].entry['gsx:_cyevm']+"</td></td><td>"+resp[i].entry['gsx:_cztg3']+"</td></td><td>"+resp[i].entry['gsx:_d2mkx']+"</td></td><td>"+resp[i].entry['gsx:_d180g']+"</td></tr>");
                     }
