@@ -147,13 +147,23 @@ app.post('/moveToServ', function(req,res){
                                     
                                     //NOW THAT THE FILE HAS BEEN UPLOADED TO THE SERV WE ARE GOING TO UPLOAD TO YT DROPBOX
                                     //http://newspaint.wordpress.com/2013/03/26/how-to-upload-a-file-over-ssh-using-node-js/
+                                    conn.on('connect', function(){
+                                        console.log( "- connected" );
+                                    });
+                                    
+                                    conn.on('end', function(){
+                                            console.log("closing sftp connection");
+                                    });
+                                    
+                                    conn.connect({
+                                            "host": "partnerupload.google.com",
+                                            "port": 19321,
+                                            "username": "yt-indmusic",
+                                            privateKey: fs.readFileSync("/home/agreen/.ssh/id_rsa")
+                                    })
                                     
                                     ids.map(function(element){
                                         wham++;
-                                        
-                                        conn.on('connect', function(){
-                                            console.log( "- connected" );
-                                        });
                                         conn.on('ready', function(){
                                             console.log("- ready");
                                             
@@ -168,21 +178,9 @@ app.post('/moveToServ', function(req,res){
                                                 writeStream.on('close', function(){
                                                     console.log("transfered - "+element.title);
                                                     sftp.end();
-                                                    process.exit( 0 );
                                                 })
                                                 readStream.pipe(writeStream);
                                             })
-                                        })
-                                        
-                                        conn.on('end', function(){
-                                            console.log("closing sftp connection");
-                                        })
-                                        
-                                        conn.connect({
-                                            "host": "partnerupload.google.com",
-                                            "port": 19321,
-                                            "username": "yt-indmusic",
-                                            privateKey: fs.readFileSync("/home/agreen/.ssh/id_rsa")
                                         })
                                         
                                     })
