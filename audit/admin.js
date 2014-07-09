@@ -163,7 +163,6 @@ app.post('/moveToServ', function(req,res){
                                     })
                                     
                                     ids.map(function(element){
-                                        wham++;
                                         conn.on('ready', function(){
                                             console.log("- ready");
                                             
@@ -178,6 +177,7 @@ app.post('/moveToServ', function(req,res){
                                                 writeStream.on('close', function(){
                                                     console.log("transfered - "+element.title);
                                                     sftp.end();
+                                                    wham++;
                                                     
                                                     if(wham == ids.length){
                                                         conn.end();
