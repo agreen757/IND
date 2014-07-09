@@ -120,7 +120,7 @@ app.post('/deactivate', function(req, res){
 })
 
 app.post('/moveToServ', function(req,res){
-    console.log(req.body.xml);
+    //console.log(req.body.xml);
     
     //****PARSE XML
     var r = new xml(req.body.xml);
