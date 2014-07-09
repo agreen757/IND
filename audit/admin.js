@@ -149,10 +149,7 @@ app.post('/moveToServ', function(req,res){
                                     //http://newspaint.wordpress.com/2013/03/26/how-to-upload-a-file-over-ssh-using-node-js/
                                     
                                     ids.map(function(element){
-                                        console.log("this far")
                                         wham++;
-                                        
-                                        
                                         
                                         conn.on('connect', function(){
                                             console.log( "- connected" );
@@ -171,6 +168,7 @@ app.post('/moveToServ', function(req,res){
                                                 writeStream.on('close', function(){
                                                     console.log("transfered - "+element.title);
                                                     sftp.end();
+                                                    process.exit( 0 );
                                                 })
                                                 readStream.pipe(writeStream);
                                             })
@@ -235,18 +233,18 @@ app.post('/details', function(req,res){
                                 if(err){console.log(err)}
                                 
                                 var counter = 0;
-                                
-                                //res.send(row_data);
-                                //console.log(row_data);
                                 var silo = [];
                                 row_data.map(function(element){
                                     counter++;
                                     var parser = new xml2js.Parser();
                                     parser.parseString(element._xml, function(err,result){
                                         if(err){console.log(err)}
-                                        //console.log(result.entry);
-                                        //console.log(result.entry['gsx:_cokwr']);
+                                        
+                                        //***SEND RESULTS TO HTML
                                         silo.push(result);
+                                        
+                                        //***STORE THIS INFORMATION IN SESSION
+                                        //req.sessionStore.
                                         
                                         if(counter == row_data.length){
                                             //console.log(silo);
