@@ -53,7 +53,7 @@ function first(callback){
     console.log("first");
     info.entry.map(function(element){
         //silo.push({fileName:element.})
-        console.log(element.entry);
+        console.log(element);
     });
     
     
