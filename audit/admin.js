@@ -124,7 +124,7 @@ app.post('/moveToServ', function(req,res){
     
     //****PARSE XML
     var r = new xml(req.body.xml,req.body.folderName);
-    r.about(function(info){
+    r.about(null,function(info){
         console.log("i'm ret ta go!")
     });
     
