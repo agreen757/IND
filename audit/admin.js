@@ -124,7 +124,9 @@ app.post('/moveToServ', function(req,res){
     
     //****PARSE XML
     var r = new xml(req.body.xml,req.body.folderName);
-    r.about();
+    r.about(function(info){
+        console.log("i'm ret ta go!")
+    });
     
     
     //****UPLOAD TO SERVER AND YT
