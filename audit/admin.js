@@ -120,10 +120,10 @@ app.post('/deactivate', function(req, res){
 })
 
 app.post('/moveToServ', function(req,res){
-    //console.log(req.body.xml);
+    console.log(req.body.folderName);
     
     //****PARSE XML
-    var r = new xml(req.body.xml);
+    var r = new xml(req.body.xml,req.body.folderName);
     r.about();
     
     
@@ -208,6 +208,8 @@ app.post('/details', function(req,res){
     console.log("got it...");
     //res.send("got it");
     console.log(req.body);
+    //STORE THE FOLDER NAME
+    
     var url = "https://www.googleapis.com/drive/v2/files?q=title+%3D+'"+req.body.title+"'&access_token="+req._passport.session.user[0].token;
     demand.get(url, function(err,response,body){
         if(err){console.log(err)}

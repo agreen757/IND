@@ -10,6 +10,7 @@
         <script>
             var fileIds = [];
             var xmlPre = [];
+            var folderName;
             var counter = 0;
             var socket = io.connect('http://ec2-54-84-17-96.compute-1.amazonaws.com/');
             socket.on('progress', function(info){
@@ -58,7 +59,7 @@
             })
             
             function suckToServ(){
-                $.post('/moveToServ', {id:fileIds,xml:xmlPre}, function(res){
+                $.post('/moveToServ', {id:fileIds,xml:xmlPre,folderName:folderName}, function(res){
                     console.log(res);
                     var doneUrl = "<center><strong>This item has been queued for upload to YouTube</strong></center>"
                     $(doneUrl).appendTo('.whatevs');
@@ -92,6 +93,7 @@
             function clearShit(item){
                $('div[id^="results"]').hide();
                console.log(item.title);
+                folderName.push(item.title);    
                 $.post('/details',{title:item.title},function(resp){
                     console.log(resp);
                     var wack = "<th>"+resp[0].entry['gsx:_chk2m']+"</th>";
