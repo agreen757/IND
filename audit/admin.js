@@ -183,12 +183,17 @@ app.post('/moveToServ', function(req,res){
                                 privateKey: fs.readFileSync("/home/agreen/.ssh/id_rsa")
                         })
                         
+                        conn.on('ready', function(){
+                            
+                            conn.sftp(function(err,sftp){
                         var xmlRead = fs.createReadStream(req.body.folderName+'.xml');
                                     var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+req.body.folderName+'.xml');
                                     xmlWriteStream.on('close', function(){
                                         console.log("uploaded metadata");
                                         sftp.end();
                                     })
+                            })       
+                    })
 
                         ids.map(function(element){
                             conn.on('ready', function(){
