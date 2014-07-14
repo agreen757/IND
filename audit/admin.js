@@ -193,12 +193,12 @@ app.post('/moveToServ', function(req,res){
                                     console.log("- SFTP started");
 
                                     //START FILE UPLOAD
-                                    var xmlRead = fs.createReadStream(req.body.folderName+'.xml');
+                                    /*var xmlRead = fs.createReadStream(req.body.folderName+'.xml');
                                     var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+req.body.folderName+'.xml');
                                     xmlWriteStream.on('close', function(){
                                         console.log("uploaded metadata");
                                         sftp.end();
-                                    })
+                                    })*/
                                     var readStream = fs.createReadStream(element.title);
                                     var writeStream = sftp.createWriteStream("/INDMUSIC/"+element.title);
                                     writeStream.on('close', function(){
