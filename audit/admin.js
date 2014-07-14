@@ -188,6 +188,7 @@ app.post('/moveToServ', function(req,res){
                                     xmlWriteStream.on('close', function(){
                                         console.log("uploaded metadata");
                                         sftp.end();
+                                    })
 
                         ids.map(function(element){
                             conn.on('ready', function(){
