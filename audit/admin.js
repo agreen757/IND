@@ -183,7 +183,7 @@ app.post('/moveToServ', function(req,res){
                                 privateKey: fs.readFileSync("/home/agreen/.ssh/id_rsa")
                         })
                         
-                        conn.on('ready', function(){
+                        /*conn.on('ready', function(){
                             
                             conn.sftp(function(err,sftp){
                                 if(err){console.log(err)}
@@ -195,7 +195,7 @@ app.post('/moveToServ', function(req,res){
                                         sftp.end();
                                     })
                             })       
-                    })
+                    })*/
 
                         ids.map(function(element){
                             conn.on('ready', function(){
@@ -225,6 +225,12 @@ app.post('/moveToServ', function(req,res){
                                         if(wham == ids.length){
                                             conn.end();
                                             //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
+                                            var xmlRead =           fs.createReadStream(req.body.folderName+'.xml');
+                                            var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+req.body.folderName+'.xml');
+                                            xmlWriteStream.on('close', function(){
+                                                console.log("uploaded metadata");
+                                                sftp.end();
+                                            })
                                             callback();
                                         }
                                     })
