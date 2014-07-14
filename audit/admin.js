@@ -124,85 +124,99 @@ app.post('/moveToServ', function(req,res){
     
     //****PARSE XML
     var r = new xml(req.body.xml,req.body.folderName);
-    r.about(null,function(info){
-        console.log("i'm ret ta go!")
-    });
+    
+    //USE ASYNC TO DO THE XML GEN AND UPLOAD AFTER THE NEXT.
+    
+    async.series([
+        function(callback){
+            r.about();
+            var a = 0;
+            var b = setTimeout(function(){
+                callback();
+            }, a+=1000)
+        },
+        function(callback){
+            upload(callback);
+        }
+    ])
     
     
     //****UPLOAD TO SERVER AND YT
+    function upload(callback){
+        var ids = req.body.id;
+        console.log(ids);
+        var counter = 0;
+        ids.map(function(element){
+            var file = fs.createWriteStream("./"+element.title);
+            //console.log(element.title+" "+   element.id);
+            var getDown = "https://www.googleapis.com/drive/v2/files/"+element.id+"?access_token="+req._passport.session.user[0].token;
+            demand.get(getDown, function(err,response,body){
+                if(err){console.log(err)}
 
-    var ids = req.body.id;
-    console.log(ids);
-    var counter = 0;
-    ids.map(function(element){
-        var file = fs.createWriteStream("./"+element.title);
-        //console.log(element.title+" "+   element.id);
-        var getDown = "https://www.googleapis.com/drive/v2/files/"+element.id+"?access_token="+req._passport.session.user[0].token;
-                        demand.get(getDown, function(err,response,body){
-                            if(err){console.log(err)}
-                            
-                            var downParse = JSON.parse(body);
-                            //console.log(downParse);
-                            var r = demand({uri:downParse.downloadUrl,headers:{authorization:'Bearer '+req._passport.session.user[0].token}}).pipe(file);
-                            r.on('error', function(error){console.log(error)});
-                            r.on('finish', function(){
-                                file.close();
-                                console.log("done downloading");
-                                counter++;
-                                console.log(counter);
-                                if(counter == ids.length){
-                                    var wham = 0;
-                                    res.send("downloaded");
-                                    
-                                    //NOW THAT THE FILE HAS BEEN UPLOADED TO THE SERV WE ARE GOING TO UPLOAD TO YT DROPBOX
-                                    //http://newspaint.wordpress.com/2013/03/26/how-to-upload-a-file-over-ssh-using-node-js/
-                                    conn.on('connect', function(){
-                                        console.log( "- connected" );
-                                    });
-                                    
-                                    conn.on('end', function(){
-                                            console.log("closing sftp connection");
-                                    });
-                                    
-                                    conn.connect({
-                                            "host": "partnerupload.google.com",
-                                            "port": 19321,
-                                            "username": "yt-indmusic",
-                                            privateKey: fs.readFileSync("/home/agreen/.ssh/id_rsa")
-                                    })
-                                    
-                                    ids.map(function(element){
-                                        conn.on('ready', function(){
-                                            console.log("- ready");
-                                            
-                                            conn.sftp(function(err,sftp){
-                                                if(err){console.log(err)}
-                                                
-                                                console.log("- SFTP started");
-                                                
-                                                //START FILE UPLOAD
-                                                var readStream = fs.createReadStream(element.title);
-                                                var writeStream = sftp.createWriteStream("/INDMUSIC/"+element.title);
-                                                writeStream.on('close', function(){
-                                                    console.log("transfered - "+element.title);
-                                                    sftp.end();
-                                                    //THIS COUNTER IS TO CLOSE THE CONNECTION ONCE THE FILES ARE DONE UPLOADING 
-                                                    wham++;
-                                                    
-                                                    if(wham == ids.length){
-                                                        conn.end();
-                                                        //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
-                                                    }
-                                                })
-                                                readStream.pipe(writeStream);
-                                            })
-                                        })
-                                        
-                                    })
-                                }
-                            })
+                var downParse = JSON.parse(body);
+                                //console.log(downParse);
+                var r = demand({uri:downParse.downloadUrl,headers:{authorization:'Bearer '+req._passport.session.user[0].token}}).pipe(file);
+                r.on('error', function(error){console.log(error)});
+                r.on('finish', function(){
+                    file.close();
+                    console.log("done downloading");
+                    counter++;
+                    console.log(counter);
+                    if(counter == ids.length){
+                        var wham = 0;
+                        res.send("downloaded");
+
+                        //NOW THAT THE FILE HAS BEEN UPLOADED TO THE SERV WE ARE GOING TO UPLOAD TO YT DROPBOX
+                        //http://newspaint.wordpress.com/2013/03/26/how-to-upload-a-file-over-ssh-using-node-js/
+                        conn.on('connect', function(){
+                            console.log( "- connected" );
+                        });
+
+                        conn.on('end', function(){
+                                console.log("closing sftp connection");
+                        });
+
+                        conn.connect({
+                                "host": "partnerupload.google.com",
+                                "port": 19321,
+                                "username": "yt-indmusic",
+                                privateKey: fs.readFileSync("/home/agreen/.ssh/id_rsa")
                         })
-    })
+
+                        ids.map(function(element){
+                            conn.on('ready', function(){
+                                console.log("- ready");
+
+                                conn.sftp(function(err,sftp){
+                                    if(err){console.log(err)}
+
+                                    console.log("- SFTP started");
+
+                                    //START FILE UPLOAD
+                                    var readStream = fs.createReadStream(element.title);
+                                    var writeStream = sftp.createWriteStream("/INDMUSIC/"+element.title);
+                                    writeStream.on('close', function(){
+                                        console.log("transfered - "+element.title);
+                                        sftp.end();
+                                        //THIS COUNTER IS TO CLOSE THE CONNECTION ONCE THE FILES ARE DONE UPLOADING 
+                                        wham++;
+
+                                        if(wham == ids.length){
+                                            conn.end();
+                                            //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
+                                            callback();
+                                        }
+                                    })
+                                    readStream.pipe(writeStream);
+                                })
+                            })
+
+                        })
+                    }
+                })
+            })
+        })
+    }
 })
 
 app.post('/details', function(req,res){
