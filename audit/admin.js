@@ -137,8 +137,55 @@ app.post('/moveToServ', function(req,res){
         },
         function(callback){
             upload(callback);
+        },
+        function(callback){
+            xmlUpload(callback,req.body.folderName);
         }
     ])
+    
+    function xmlUpload(callback,folder){
+        conn.on('connect', function(){
+                            console.log( "- connected" );
+                        });
+
+                        conn.on('end', function(){
+                                console.log("closing sftp connection");
+                        });
+
+                        conn.connect({
+                                "host": "partnerupload.google.com",
+                                "port": 19321,
+                                "username": "yt-indmusic",
+                                privateKey: fs.readFileSync("/home/agreen/.ssh/id_rsa")
+                        });
+        
+            conn.on('ready', function(){
+                                console.log("- ready");
+
+                                conn.sftp(function(err,sftp){
+                                    if(err){console.log(err)}
+
+                                    console.log("- SFTP started");
+
+                
+                                    var readStream = fs.createReadStream();
+                                    var writeStream = sftp.createWriteStream("/INDMUSIC/"+folder+'.xml');
+                                    writeStream.on('close', function(){
+                                        console.log("transfered - "+folder+'.xml');
+                                        sftp.end();
+                                        //THIS COUNTER IS TO CLOSE THE CONNECTION ONCE THE FILES ARE DONE UPLOADING 
+                                        wham++;
+
+                                        if(wham == ids.length){
+                                            conn.end();
+                                            //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
+                                            callback();
+                                        }
+                                    })
+                                    readStream.pipe(writeStream);
+                                })
+                            })
+    }
     
     
     //****UPLOAD TO SERVER AND YT
@@ -196,6 +243,7 @@ app.post('/moveToServ', function(req,res){
                                     })
                             })       
                     })*/
+                        
 
                         ids.map(function(element){
                             conn.on('ready', function(){
@@ -223,15 +271,8 @@ app.post('/moveToServ', function(req,res){
                                         wham++;
 
                                         if(wham == ids.length){
-                                            //conn.end();
+                                            conn.end();
                                             //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
-                                            var xmlRead =           fs.createReadStream(req.body.folderName+'.xml');
-                                            var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+req.body.folderName+'.xml');
-                                            xmlWriteStream.on('close', function(){
-                                                console.log("uploaded metadata");
-                                                sftp.end();
-                                                conn.end()
-                                            })
                                             callback();
                                         }
                                     })
