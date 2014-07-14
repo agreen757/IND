@@ -223,13 +223,14 @@ app.post('/moveToServ', function(req,res){
                                         wham++;
 
                                         if(wham == ids.length){
-                                            conn.end();
+                                            //conn.end();
                                             //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
                                             var xmlRead =           fs.createReadStream(req.body.folderName+'.xml');
                                             var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+req.body.folderName+'.xml');
                                             xmlWriteStream.on('close', function(){
                                                 console.log("uploaded metadata");
                                                 sftp.end();
+                                                conn.end()
                                             })
                                             callback();
                                         }
