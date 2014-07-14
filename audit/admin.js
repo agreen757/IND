@@ -168,7 +168,7 @@ app.post('/moveToServ', function(req,res){
                                     console.log("- SFTP started");
 
                 
-                                    var readStream = fs.createReadStream();
+                                    var readStream = fs.createReadStream(folder+'.xml');
                                     var writeStream = sftp.createWriteStream("/INDMUSIC/"+folder+'.xml');
                                     writeStream.on('close', function(){
                                         console.log("transfered - "+folder+'.xml');
