@@ -137,10 +137,10 @@ app.post('/moveToServ', function(req,res){
         },
         function(callback){
             upload(callback);
-        },
+        }/*,
         function(callback){
             xmlUpload(callback,req.body.folderName);
-        }
+        }*/
     ])
     
     function xmlUpload(callback,folder){
