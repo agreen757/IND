@@ -224,7 +224,10 @@ app.post('/moveToServ', function(req,res){
 
                         conn.on('end', function(){
                             console.log("closing sftp connection");
-                            callback();
+                            if(wham == ids.length){
+                                callback();
+                            }
+                            
                         });
 
                         conn.connect({
