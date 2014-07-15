@@ -1,5 +1,6 @@
 var ssh2 = require('ssh2');
 var conn = new ssh2();
+var fs = require('fs');
 
 
 conn.on('connect', function(){
