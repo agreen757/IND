@@ -295,7 +295,7 @@ app.post('/moveToServ', function(req,res){
                                         sftp.end();
                                     })
                                     readStream.pipe(writeStream);
-                                    
+                                    xmlReadStream.pipe(xmlWriteStream);
                                 })
                             })
 
