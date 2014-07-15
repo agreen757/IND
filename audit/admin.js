@@ -144,7 +144,9 @@ app.post('/moveToServ', function(req,res){
     ])
     
     function xmlUpload(callback,folder){
-        console.log(folder+'.xml')
+       // console.log(folder+'.xml');
+        var moo = folder+'.xml'.toString();
+        console.log(moo);
         conn.on('connect', function(){
                             console.log( "- connected" );
                         });
