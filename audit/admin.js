@@ -151,6 +151,7 @@ app.post('/moveToServ', function(req,res){
 
                         conn.on('end', function(){
                                 console.log("closing sftp connection");
+                                callback();
                         });
 
                         conn.connect({
@@ -180,7 +181,6 @@ app.post('/moveToServ', function(req,res){
                                         if(wham == ids.length){
                                             conn.end();
                                             //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
-                                            callback();
                                         }
                                     })
                                     readStream.pipe(writeStream);
@@ -221,7 +221,8 @@ app.post('/moveToServ', function(req,res){
                         });
 
                         conn.on('end', function(){
-                                console.log("closing sftp connection");
+                            console.log("closing sftp connection");
+                            callback();
                         });
 
                         conn.connect({
@@ -274,7 +275,6 @@ app.post('/moveToServ', function(req,res){
                                         if(wham == ids.length){
                                             conn.end();
                                             //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
-                                            callback();
                                         }
                                     })
                                     readStream.pipe(writeStream);
