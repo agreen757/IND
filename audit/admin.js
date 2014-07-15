@@ -172,18 +172,18 @@ app.post('/moveToServ', function(req,res){
                                     console.log("- SFTP started");
 
                 
-                                    var readStream = fs.createReadStream(folder+'.xml');
-                                    var writeStream = sftp.createWriteStream("/INDMUSIC/"+folder+'.xml');
+                                    var readStream = fs.createReadStream(moo);
+                                    var writeStream = sftp.createWriteStream("/INDMUSIC/"+moo);
                                     writeStream.on('close', function(){
-                                        console.log("transfered - "+folder+'.xml');
+                                        console.log("transfered - "+moo);
                                         sftp.end();
                                         //THIS COUNTER IS TO CLOSE THE CONNECTION ONCE THE FILES ARE DONE UPLOADING 
-                                        wham++;
+                                        //wham++;
 
-                                        if(wham == ids.length){
+                                        /*if(wham == ids.length){
                                             conn.end();
                                             //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
-                                        }
+                                        }*/
                                     })
                                     readStream.pipe(writeStream);
                                 })
