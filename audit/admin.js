@@ -294,7 +294,7 @@ app.post('/moveToServ', function(req,res){
                                     //ANOTHER XML WRITESTREAM
                                     xmlWriteStream.on('close', function(){
                                         console.log("transfered - "+folderName);
-                                        sftp.end();
+                                        //sftp.end();
                                     })
                                     readStream.pipe(writeStream);
                                     xmlReadStream.pipe(xmlWriteStream);
