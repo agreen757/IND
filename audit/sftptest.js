@@ -35,7 +35,7 @@ conn.on('ready', function(){
 
         //var writeStream = sftp.createWriteStream("/INDMUSIC/"+element.title);
 
-        //var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+folderName);
+        var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/CREATORANDDISTRACTOR.xml");
 
         /*writeStream.on('close', function(){
             console.log("transfered - "+element.title);
