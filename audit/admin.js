@@ -277,7 +277,7 @@ app.post('/moveToServ', function(req,res){
                                         console.log(data);
                                     })
                                     var writeStream = sftp.createWriteStream("/INDMUSIC/"+element.title);
-                                    /*var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+folderName+'.xml'.toString());*/
+                                    var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+folderName+'.xml'.toString());
                                     
                                     writeStream.on('close', function(){
                                         console.log("transfered - "+element.title);
@@ -293,12 +293,12 @@ app.post('/moveToServ', function(req,res){
                                     })
                                     
                                     //ANOTHER XML WRITESTREAM
-                                  /*  xmlWriteStream.on('close', function(){
+                                    xmlWriteStream.on('close', function(){
                                         console.log("transfered - "+folderName);
                                         sftp.end();
-                                    })*/
+                                    })
                                     readStream.pipe(writeStream);
-                                    //xmlReadStream.pipe(xmlWriteStream);
+                                    xmlReadStream.pipe(xmlWriteStream);
                                 })
                             })
 
