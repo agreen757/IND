@@ -144,50 +144,75 @@ app.post('/moveToServ', function(req,res){
     ])
     
     function xmlUpload(callback,folder){
-       // console.log(folder+'.xml');
         var moo = folder+'.xml'.toString();
         console.log(moo);
-        conn.on('connect', function(){
-                            console.log( "- connected" );
-                        });
-
-                        conn.on('end', function(){
-                                console.log("closing sftp connection");
-                                callback();
-                        });
-
-                        conn.connect({
-                                "host": "partnerupload.google.com",
-                                "port": 19321,
-                                "username": "yt-indmusic",
-                                privateKey: fs.readFileSync("/home/agreen/.ssh/id_rsa")
-                        });
         
-            conn.on('ready', function(){
-                                console.log("- ready");
+        conn.on(
+            'connect',
+            function () {
+                console.log( "- connected" );
+            }
+        );
 
-                                conn.sftp(function(err,sftp){
-                                    if(err){console.log(err)}
+        conn.on(
+            'ready',
+            function () {
+                console.log( "- ready" );
 
-                                    console.log("- SFTP started");
+                conn.sftp(
+                    function (err, sftp) {
+                        if ( err ) {
+                            console.log( "Error, problem starting SFTP: %s", err );
+                            process.exit( 2 );
+                        }
 
-                
-                                    var readStream = fs.createReadStream(moo);
-                                    var writeStream = sftp.createWriteStream("/INDMUSIC/"+moo);
-                                    writeStream.on('close', function(){
-                                        console.log("transfered - "+moo);
-                                        sftp.end();
-                                        //THIS COUNTER IS TO CLOSE THE CONNECTION ONCE THE FILES ARE DONE UPLOADING 
-                                        //wham++;
+                        console.log( "- SFTP started" );
 
-                                        /*if(wham == ids.length){
-                                            conn.end();
-                                            //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
-                                        }*/
-                                    })
-                                    readStream.pipe(writeStream);
-                                })
-                            })
+                        // upload file
+                        var readStream = fs.createReadStream(moo);
+                        var writeStream = sftp.createWriteStream( "/INDMUSIC/"+moo);
+
+                        // what to do when transfer finishes
+                        writeStream.on(
+                            'close',
+                            function () {
+                                console.log( "- file transferred" );
+                                sftp.end();
+                                process.exit( 0 );
+                            }
+                        );
+
+                        // initiate transfer of file
+                        readStream.pipe( writeStream );
+                    }
+                );
+            }
+        );
+
+        conn.on(
+            'error',
+            function (err) {
+                console.log( "- connection error: %s", err );
+                process.exit( 1 );
+            }
+        );
+
+        conn.on(
+            'end',
+            function () {
+                process.exit( 0 );
+            }
+        );
+
+        conn.connect(
+            {
+                "host": "partnerupload.google.com",
+                "port": 19321,
+                "username": "yt-indmusic",
+                privateKey: fs.readFileSync("/home/agreen/.ssh/id_rsa")
+            }
+        );
+        
     }
     
     
@@ -224,10 +249,7 @@ app.post('/moveToServ', function(req,res){
 
                         conn.on('end', function(){
                             console.log("closing sftp connection");
-                            if(wham == ids.length){
-                                callback();
-                            }
-                            
+                            callback();
                         });
 
                         conn.connect({
