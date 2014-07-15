@@ -154,38 +154,31 @@ app.post('/moveToServ', function(req,res){
             }
         );
 
-        conn.on(
-            'ready',
-            function () {
-                console.log( "- ready" );
+        conn.sftp(
+            function (err, sftp) {
+                if ( err ) {
+                    console.log( "Error, problem starting SFTP: %s", err );
+                    process.exit( 2 );
+                }
 
-                conn.sftp(
-                    function (err, sftp) {
-                        if ( err ) {
-                            console.log( "Error, problem starting SFTP: %s", err );
-                            process.exit( 2 );
-                        }
+                console.log( "- SFTP started" );
 
-                        console.log( "- SFTP started" );
+                // upload file
+                var readStream = fs.createReadStream(moo);
+                var writeStream = sftp.createWriteStream( "/INDMUSIC/"+moo);
 
-                        // upload file
-                        var readStream = fs.createReadStream(moo);
-                        var writeStream = sftp.createWriteStream( "/INDMUSIC/"+moo);
-
-                        // what to do when transfer finishes
-                        writeStream.on(
-                            'close',
-                            function () {
-                                console.log( "- file transferred" );
-                                sftp.end();
-                                process.exit( 0 );
-                            }
-                        );
-
-                        // initiate transfer of file
-                        readStream.pipe( writeStream );
+                // what to do when transfer finishes
+                writeStream.on(
+                    'close',
+                    function () {
+                        console.log( "- file transferred" );
+                        sftp.end();
+                        process.exit( 0 );
                     }
                 );
+
+                // initiate transfer of file
+                readStream.pipe( writeStream );
             }
         );
 
