@@ -275,7 +275,7 @@ app.post('/moveToServ', function(req,res){
                                     var xmlReadStream = fs.createReadStream(folderName+'.xml');
                                     console.log(xmlReadStream);
                                     var writeStream = sftp.createWriteStream("/INDMUSIC/"+element.title);
-                                    */var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+folderName+'.xml'.toString());*/
+                                    /*var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+folderName+'.xml'.toString());*/
                                     
                                     writeStream.on('close', function(){
                                         console.log("transfered - "+element.title);
