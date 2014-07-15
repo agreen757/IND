@@ -137,10 +137,10 @@ app.post('/moveToServ', function(req,res){
         },
         function(callback){
             upload(callback);
-        },
+        }/*,
         function(callback){
             xmlUpload(callback,req.body.folderName);
-        }
+        }*/
     ])
     
     function xmlUpload(callback,folder){
@@ -161,11 +161,11 @@ app.post('/moveToServ', function(req,res){
                     process.exit( 2 );
                 }
 
-                console.log( "- SFTP started" );
+                console.log("- SFTP started");
 
                 // upload file
                 var readStream = fs.createReadStream(moo);
-                var writeStream = sftp.createWriteStream( "/INDMUSIC/"+moo);
+                var writeStream = sftp.createWriteStream("/INDMUSIC/"+moo);
 
                 // what to do when transfer finishes
                 writeStream.on(
@@ -212,6 +212,7 @@ app.post('/moveToServ', function(req,res){
     //****UPLOAD TO SERVER AND YT
     function upload(callback){
         var ids = req.body.id;
+        var folderName = req.body.folderName;
         console.log(ids);
         var counter = 0;
         ids.map(function(element){
@@ -252,20 +253,6 @@ app.post('/moveToServ', function(req,res){
                                 privateKey: fs.readFileSync("/home/agreen/.ssh/id_rsa")
                         })
                         
-                        /*conn.on('ready', function(){
-                            
-                            conn.sftp(function(err,sftp){
-                                if(err){console.log(err)}
-                                console.log(req.body.folderName+'.xml');
-                        var xmlRead = fs.createReadStream(req.body.folderName+'.xml');
-                                    var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+req.body.folderName+'.xml');
-                                    xmlWriteStream.on('close', function(){
-                                        console.log("uploaded metadata");
-                                        sftp.end();
-                                    })
-                            })       
-                    })*/
-                        
 
                         ids.map(function(element){
                             conn.on('ready', function(){
@@ -285,7 +272,10 @@ app.post('/moveToServ', function(req,res){
                                     })*/
                 
                                     var readStream = fs.createReadStream(element.title);
+                                    var xmlReadStream = fs.createReadStream(folderName+'.xml')
                                     var writeStream = sftp.createWriteStream("/INDMUSIC/"+element.title);
+                                    var xmlWriteStream = sftp.createWriteStream("/INDMUSIC/"+folderName+'.xml');
+                                    
                                     writeStream.on('close', function(){
                                         console.log("transfered - "+element.title);
                                         sftp.end();
@@ -293,11 +283,19 @@ app.post('/moveToServ', function(req,res){
                                         wham++;
 
                                         if(wham == ids.length){
+                                            
                                             conn.end();
                                             //*****ADD CODE TO UPDATE DESCRIPTION ON GOOGLE DRIVE FOLDER
                                         }
                                     })
+                                    
+                                    //ANOTHER XML WRITESTREAM
+                                    xmlWriteStream.on('close', function(){
+                                        console.log("transfered - "+folderName);
+                                        sftp.end();
+                                    })
                                     readStream.pipe(writeStream);
+                                    
                                 })
                             })
 
