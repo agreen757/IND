@@ -31,7 +31,8 @@ conn.on('ready', function(){
 
 
         //var readStream = fs.createReadStream(element.title);
-        var xmlReadStream = fs.createReadStream('CREATORANDDISTRACTOR.xml');
+        var fileName = 'CREATORDISTRACTOR'
+        var xmlReadStream = fs.createReadStream(fileName+'.xml');
 
         //var writeStream = sftp.createWriteStream("/INDMUSIC/"+element.title);
 
